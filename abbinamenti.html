@@ -6,112 +6,131 @@
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 <meta name="format-detection" content="telephone=no" />
+<meta name="theme-color" content="#eef1e4" />
+<meta name="description" content="Scheda abbinamenti vini, gin tonic, cocktail e birre per ogni piatto — Poggio a Issi." />
 <title>Abbinamenti — Poggio a Issi</title>
+<script>
+(function(){
+  try{
+    var saved = localStorage.getItem('poggio-theme');
+    if(saved) document.documentElement.setAttribute('data-theme', saved);
+  }catch(e){}
+})();
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-    /* ── Design tokens (identici a index.html / guida-gin-sala.html) ── */
-    :root {
-  --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
-  --text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
-  --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
-  --text-lg: clamp(1.125rem, 1rem + 0.75vw, 1.5rem);
-  --text-xl: clamp(1.5rem, 1.2rem + 1.25vw, 2.25rem);
-  --text-2xl: clamp(2rem, 1.2rem + 2.5vw, 3.5rem);
-  --space-1:0.25rem;--space-2:0.5rem;--space-3:0.75rem;--space-4:1rem;
-  --space-5:1.25rem;--space-6:1.5rem;--space-8:2rem;--space-10:2.5rem;
-  --space-12:3rem;--space-16:4rem;
-  --radius-sm:0.375rem;--radius-md:0.5rem;--radius-lg:0.75rem;--radius-xl:1rem;--radius-full:9999px;
-  --transition-interactive:180ms cubic-bezier(0.16,1,0.3,1);
-  --font-display:"Baloo 2",cursive;
-  --font-body:"Inter",sans-serif;
-}
-:root,[data-theme="light"]{
-  --color-bg:#eef1e8;--color-surface:#f7f8f2;--color-surface-2:#e6ebde;--color-border:#bcc7b1;
-  --color-text:#2d3a23;--color-text-muted:#55664a;--color-text-faint:#87957d;
-  --color-primary:#7a8f49;--color-primary-hover:#65793a;--color-primary-highlight:#dde6c9;
-  --color-ok:#5f7a56;--color-ok-soft:#dfe8d9;
-  --color-blue:#58758b;--color-blue-soft:#dce7ef;
-  --color-red:#9a6660;--color-red-soft:#efdfdb;
-  --color-rose:#81505b;--color-rose-soft:#ead8dd;
-  --color-gold:#9a7a39;--color-gold-soft:#eee2bf;
-  --color-replace:#79649b;--color-replace-soft:#e7e0f0;
-  --color-warn:#a06a45;--color-warn-soft:#efdfd3;
-  --color-bubble:#7f9baa;--color-bubble-soft:#dbe5ea;
-  --color-amber:#a85a2a;--color-amber-soft:#f3e0d2;
-  --color-violet:#6e4bb8;--color-violet-soft:#e7def8;
-  --shadow-sm:0 1px 2px rgba(33,45,24,.08);
-  --shadow-md:0 10px 25px rgba(33,45,24,.12);
-  --shadow-lg:0 16px 40px rgba(33,45,24,.14);
-}
-[data-theme="dark"]{
-  --color-bg:#111611;--color-surface:#1a2219;--color-surface-2:#253026;--color-border:#394738;
-  --color-text:#e6eadc;--color-text-muted:#b4bea8;--color-text-faint:#7f8b77;
-  --color-primary:#a6bf67;--color-primary-hover:#bbd97a;--color-primary-highlight:#2d3a24;
-  --color-ok:#a9c697;--color-ok-soft:#1f2a20;
-  --color-blue:#9dbed0;--color-blue-soft:#1b2730;
-  --color-red:#d7a094;--color-red-soft:#2d211d;
-  --color-rose:#d6a7b1;--color-rose-soft:#2e2125;
-  --color-gold:#d8c07e;--color-gold-soft:#2c2718;
-  --color-replace:#bda9de;--color-replace-soft:#241f31;
-  --color-warn:#d8a07a;--color-warn-soft:#2d221c;
-  --color-bubble:#a9c1cc;--color-bubble-soft:#1c262b;
-  --color-amber:#e2a16e;--color-amber-soft:#2b2018;
-  --color-violet:#b89cff;--color-violet-soft:#231c33;
-  --shadow-sm:0 1px 2px rgba(0,0,0,.24);
-  --shadow-md:0 12px 32px rgba(0,0,0,.38);
-  --shadow-lg:0 18px 48px rgba(0,0,0,.42);
-}
+    /* ══════════════════════════════════════════════════════════
+       POGGIO A ISSI — Abbinamenti
+       Direzione: "Il Taccuino di Cantina" — un registro da sommelier,
+       non un'app generica: carta paglierina, inchiostro verde bottiglia,
+       accenti da etichetta (ossido/vino, ginepro/mist, rame/cocktail,
+       paglia/birra, ottone per i consigli).
+       ══════════════════════════════════════════════════════════ */
 
-/* ── Shared topbar ── */
-.topbar{position:sticky;top:0;z-index:100;backdrop-filter:blur(14px);background:color-mix(in srgb,var(--color-bg) 78%,transparent);border-bottom:1px solid color-mix(in srgb,var(--color-border) 75%,transparent)}
-.topbar-inner{width:min(1100px,calc(100% - 2rem));margin:0 auto;padding:var(--space-4) 0;display:flex;align-items:center;justify-content:space-between;gap:var(--space-4)}
-.brand{display:flex;align-items:center;gap:var(--space-3);min-width:0}
-.brand-back{display:grid;place-items:center;width:36px;height:36px;border-radius:10px;flex-shrink:0;border:1px solid color-mix(in srgb,var(--color-border) 80%,transparent);background:var(--color-surface);color:var(--color-text-muted);font-size:1.1rem;font-weight:700;box-shadow:var(--shadow-sm);transition:background var(--transition-interactive),color var(--transition-interactive);text-decoration:none}
-.brand-back:hover{background:var(--color-surface-2);color:var(--color-text)}
-.brand-mark{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:var(--color-primary-highlight);border:1px solid color-mix(in srgb,var(--color-primary) 18%,var(--color-border));box-shadow:var(--shadow-sm);color:var(--color-primary);font-size:1.15rem;flex-shrink:0}
-.brand-copy .brand-title{font-family:var(--font-display);font-size:var(--text-xl);line-height:.95;letter-spacing:.02em}
-.brand-copy .brand-subtitle{font-size:var(--text-sm);color:var(--color-text-muted);margin-top:2px}
-.theme-toggle{min-width:48px;min-height:48px;border-radius:var(--radius-full);border:1px solid color-mix(in srgb,var(--color-border) 80%,transparent);background:var(--color-surface);box-shadow:var(--shadow-sm);display:grid;place-items:center;touch-action:manipulation;cursor:pointer}
-@media(max-width:760px){.topbar-inner{width:min(100%,calc(100% - 1rem))}.brand-copy .brand-title{font-size:1.5rem}}
+    :root {
+      --font-display: "Fraunces", "DM Serif Display", serif;
+      --font-body: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", monospace;
+
+      --text-xs:   clamp(0.72rem, 0.68rem + 0.2vw, 0.8rem);
+      --text-sm:   clamp(0.85rem, 0.8rem + 0.25vw, 0.94rem);
+      --text-base: clamp(0.98rem, 0.93rem + 0.25vw, 1.06rem);
+      --text-lg:   clamp(1.1rem, 1rem + 0.6vw, 1.35rem);
+      --text-xl:   clamp(1.4rem, 1.15rem + 1.1vw, 1.9rem);
+      --text-2xl:  clamp(1.9rem, 1.3rem + 2.4vw, 3rem);
+
+      --space-1:0.25rem; --space-2:0.5rem; --space-3:0.75rem; --space-4:1rem;
+      --space-5:1.25rem; --space-6:1.5rem; --space-8:2rem; --space-10:2.5rem;
+      --space-12:3rem;   --space-16:4rem;
+
+      --radius-sm:0.5rem; --radius-md:0.85rem; --radius-lg:1.1rem;
+      --radius-xl:1.5rem; --radius-full:9999px;
+
+      --ease: cubic-bezier(.16,1,.3,1);
+      --t-fast: 140ms var(--ease);
+      --t-med:  240ms var(--ease);
+    }
+
+    :root, [data-theme="light"] {
+      --paper:      #eef1e4;
+      --surface:    #fbf9f0;
+      --surface-2:  #e7e6d3;
+      --line:       #cdd0b8;
+      --ink:        #242a1d;
+      --ink-muted:  #5d6650;
+      --ink-faint:  #6d7560;
+
+      --vine:       #3c5731;
+      --oxide:      #8a3a3a;
+      --mist:       #2f6b64;
+      --copper:     #8f5119;
+      --straw:      #786315;
+      --brass:      #8a5f19;
+
+      --shadow-sm: 0 1px 2px rgba(30,35,20,.07);
+      --shadow-md: 0 8px 22px rgba(30,35,20,.10);
+      --shadow-lg: 0 18px 44px rgba(30,35,20,.14);
+    }
+
+    [data-theme="dark"] {
+      --paper:      #171b12;
+      --surface:    #212617;
+      --surface-2:  #2a3020;
+      --line:       #3d4632;
+      --ink:        #ecefdf;
+      --ink-muted:  #b3bca0;
+      --ink-faint:  #7d8770;
+
+      --vine:       #9dc17d;
+      --oxide:      #dd9a94;
+      --mist:       #86c6bd;
+      --copper:     #e2a566;
+      --straw:      #d3bd63;
+      --brass:      #e0b45f;
+
+      --shadow-sm: 0 1px 3px rgba(0,0,0,.3);
+      --shadow-md: 0 12px 30px rgba(0,0,0,.36);
+      --shadow-lg: 0 22px 52px rgba(0,0,0,.42);
+    }
 
     /* ── Reset ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; color: inherit; }
+    button { cursor: pointer; border: none; background: none; }
+    input  { outline: none; }
+    svg { display: block; }
+    ::selection { background: color-mix(in srgb, var(--vine) 30%, transparent); }
 
     body {
       min-height: 100dvh;
       font-family: var(--font-body);
       font-size: var(--text-base);
       line-height: 1.6;
-      color: var(--color-text);
+      color: var(--ink);
       background:
-        radial-gradient(circle at top left,  color-mix(in srgb, var(--color-primary) 12%, transparent), transparent 32%),
-        radial-gradient(circle at right center, color-mix(in srgb, var(--color-surface-2) 55%, transparent), transparent 30%),
-        var(--color-bg);
+        radial-gradient(circle at 12% -8%, color-mix(in srgb, var(--vine) 10%, transparent), transparent 40%),
+        radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--brass) 8%, transparent), transparent 35%),
+        var(--paper);
+      transition: background var(--t-med), color var(--t-med);
     }
 
-    a { color: inherit; text-decoration: none; }
-    button, input { font: inherit; color: inherit; }
-    button { cursor: pointer; border: none; background: none; }
-    input  { outline: none; }
+    .shell, .topbar-inner, .footer {
+      width: min(1080px, calc(100% - 2rem));
+      margin-inline: auto;
+    }
 
     /* ── Topbar ── */
     .topbar {
       position: sticky;
       top: 0;
       z-index: 100;
-      backdrop-filter: blur(14px);
-      background: color-mix(in srgb, var(--color-bg) 78%, transparent);
-      border-bottom: 1px solid color-mix(in srgb, var(--color-border) 75%, transparent);
-    }
-
-    .topbar-inner,
-    .shell,
-    .footer {
-      width: min(1100px, calc(100% - 2rem));
-      margin-inline: auto;
+      backdrop-filter: blur(16px);
+      background: color-mix(in srgb, var(--paper) 82%, transparent);
+      border-bottom: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
     }
 
     .topbar-inner {
@@ -122,357 +141,345 @@
       padding: var(--space-4) 0;
     }
 
-    /* ── Brand ── */
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: var(--space-3);
-      min-width: 0;
+    .brand { display: flex; align-items: center; gap: var(--space-3); min-width: 0; }
+
+    .brand-back {
+      display: grid; place-items: center;
+      width: 38px; height: 38px;
+      border-radius: var(--radius-md);
+      flex-shrink: 0;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--ink-muted);
+      box-shadow: var(--shadow-sm);
+      transition: background var(--t-fast), color var(--t-fast), border-color var(--t-fast);
     }
+    .brand-back svg { width: 17px; height: 17px; }
+    .brand-back:hover { background: var(--surface-2); color: var(--ink); border-color: var(--vine); }
 
     .brand-mark {
-      width: 44px;
-      height: 44px;
-      border-radius: 14px;
-      background: var(--color-primary-highlight);
-      color: var(--color-primary);
-      display: grid;
-      place-items: center;
-      box-shadow: var(--shadow-sm);
-      border: 1px solid color-mix(in srgb, var(--color-primary) 18%, var(--color-border));
-      font-size: 1.2rem;
+      width: 42px; height: 42px;
+      border-radius: var(--radius-md);
+      display: grid; place-items: center;
       flex-shrink: 0;
-    }
-
-    .brand h1 {
-      font-family: var(--font-display);
-      font-size: var(--text-xl);
-      line-height: 0.95;
-      letter-spacing: 0.02em;
-    }
-
-    .brand p {
-      color: var(--color-text-muted);
-      font-size: var(--text-sm);
-    }
-
-    /* ── Theme toggle ── */
-    .theme-toggle {
-      min-width: 48px;
-      min-height: 48px;
-      border-radius: var(--radius-full);
-      padding: var(--space-2);
-      border: 1px solid color-mix(in srgb, var(--color-border) 80%, transparent);
-      background: var(--color-surface);
+      background: color-mix(in srgb, var(--vine) 14%, var(--surface));
+      border: 1px solid color-mix(in srgb, var(--vine) 30%, var(--line));
+      color: var(--vine);
       box-shadow: var(--shadow-sm);
-      display: grid;
-      place-items: center;
     }
+    .brand-mark svg { width: 22px; height: 22px; }
+
+    .brand-copy { min-width: 0; }
+    .brand-title {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: var(--text-xl);
+      line-height: 1;
+      letter-spacing: -0.01em;
+    }
+    .brand-subtitle {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin-top: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .theme-toggle {
+      position: relative;
+      width: 42px; height: 42px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--line);
+      background: var(--surface);
+      box-shadow: var(--shadow-sm);
+      display: grid; place-items: center;
+      flex-shrink: 0;
+      touch-action: manipulation;
+      transition: border-color var(--t-fast), background var(--t-fast);
+    }
+    .theme-toggle:hover { border-color: var(--vine); }
+    .theme-toggle svg { width: 19px; height: 19px; position: absolute; transition: opacity var(--t-fast), transform var(--t-fast); }
+    .icon-sun  { color: var(--brass); opacity: 1; transform: scale(1) rotate(0deg); }
+    .icon-moon { color: var(--mist);  opacity: 0; transform: scale(.5) rotate(-45deg); }
+    [data-theme="dark"] .icon-sun  { opacity: 0; transform: scale(.5) rotate(45deg); }
+    [data-theme="dark"] .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
 
     /* ── Shell / layout ── */
-    .shell {
-      padding: var(--space-5) 0 var(--space-16);
-      display: grid;
-      gap: var(--space-5);
-    }
+    .shell { padding: var(--space-5) 0 var(--space-16); display: grid; gap: var(--space-5); }
 
     /* ── Stats bar ── */
-    .stats {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-2);
-    }
+    .stats { display: flex; flex-wrap: wrap; gap: var(--space-2); }
 
     .stat {
-      display: inline-flex;
-      align-items: center;
-      gap: var(--space-2);
-      min-height: 34px;
-      padding: 0 var(--space-3);
+      display: inline-flex; align-items: center; gap: var(--space-2);
+      min-height: 32px; padding: 0 var(--space-3);
       border-radius: var(--radius-full);
-      background: var(--color-surface);
-      border: 1px solid color-mix(in srgb, var(--color-border) 80%, transparent);
-      color: var(--color-text-muted);
+      background: var(--surface);
+      border: 1px solid var(--line);
+      color: var(--ink-muted);
+      font-family: var(--font-mono);
       font-size: var(--text-xs);
-      font-weight: 700;
+      font-weight: 500;
       box-shadow: var(--shadow-sm);
     }
-
-    .dot {
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
+    .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 
     /* ── Search ── */
     .search {
-      display: flex;
-      align-items: center;
-      gap: var(--space-3);
-      background: var(--color-surface);
-      border: 1px solid color-mix(in srgb, var(--color-border) 85%, transparent);
-      border-radius: 20px;
+      display: flex; align-items: center; gap: var(--space-3);
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
       padding: 0 var(--space-4);
-      min-height: 56px;
+      min-height: 52px;
       box-shadow: var(--shadow-sm);
-      transition: border-color var(--transition-interactive), box-shadow var(--transition-interactive);
+      transition: border-color var(--t-fast), box-shadow var(--t-fast);
     }
-
-    .search:focus-within {
-      border-color: color-mix(in srgb, var(--color-primary) 40%, var(--color-border));
-      box-shadow: var(--shadow-md);
-    }
-
-    .search input {
-      width: 100%;
-      background: transparent;
-      border: 0;
-      font-size: var(--text-sm);
-    }
-
-    .search svg { color: var(--color-text-faint); flex-shrink: 0; }
+    .search:focus-within { border-color: var(--vine); box-shadow: var(--shadow-md); }
+    .search input { width: 100%; background: transparent; border: 0; font-size: var(--text-sm); }
+    .search input::placeholder { color: var(--ink-faint); }
+    .search svg { color: var(--ink-faint); flex-shrink: 0; width: 18px; height: 18px; }
 
     /* ── Tabs ── */
-    .tabs {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-2);
-    }
+    .tabs { display: flex; flex-wrap: wrap; gap: var(--space-2); }
 
     .tab {
-      padding: var(--space-2) var(--space-4);
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 8px var(--space-4);
       border-radius: var(--radius-full);
-      border: 1px solid color-mix(in srgb, var(--color-border) 80%, transparent);
-      background: var(--color-surface);
-      color: var(--color-text-muted);
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--ink-muted);
       font-size: var(--text-xs);
-      font-weight: 700;
+      font-weight: 600;
       box-shadow: var(--shadow-sm);
-      transition: background var(--transition-interactive), color var(--transition-interactive), border-color var(--transition-interactive);
+      transition: background var(--t-fast), color var(--t-fast), border-color var(--t-fast);
     }
-
-    .tab:hover { border-color: var(--color-primary); color: var(--color-primary); }
-
-    .tab.active {
-      background: var(--color-text);
-      color: var(--color-bg);
-      border-color: var(--color-text);
-    }
+    .tab svg { width: 15px; height: 15px; opacity: .8; }
+    .tab:hover { border-color: var(--vine); color: var(--vine); }
+    .tab.active { background: var(--vine); color: var(--surface); border-color: var(--vine); }
+    .tab.active svg { opacity: 1; }
 
     /* ── Content area ── */
-    .content {
-      display: grid;
-      gap: var(--space-8);
-    }
+    .content { display: grid; gap: var(--space-8); }
 
-    /* ── Section header ── */
     .section-head {
-      cursor: pointer;
-      user-select: none;
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: var(--space-4);
-      margin-bottom: var(--space-3);
+      cursor: pointer; user-select: none;
+      display: flex; align-items: flex-end; justify-content: space-between;
+      gap: var(--space-4); margin-bottom: var(--space-3);
     }
-
     .section-head h3 {
       font-family: var(--font-display);
+      font-weight: 600;
       font-size: var(--text-lg);
-      letter-spacing: -0.02em;
+      letter-spacing: -0.01em;
       line-height: 1.1;
     }
-
-    .section-head p {
-      color: var(--color-text-muted);
-      font-size: var(--text-sm);
-      margin-top: var(--space-1);
-    }
-
-    .section-head:hover h3 { color: var(--color-primary); }
-
+    .section-head p { color: var(--ink-faint); font-size: var(--text-xs); margin-top: 3px; }
+    .section-head:hover h3 { color: var(--vine); }
     .section-chevron {
-      font-size: 1rem;
-      color: var(--color-text-faint);
-      flex-shrink: 0;
-      align-self: center;
-      margin-left: auto;
+      font-family: var(--font-mono);
+      font-size: .95rem; color: var(--ink-faint);
+      flex-shrink: 0; align-self: center; margin-left: auto;
+      transition: transform var(--t-fast);
     }
 
     /* ── Cards grid ── */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--space-4);
-    }
-
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); }
     .grid.collapsed { display: none; }
 
-    /* ── Card ── */
+    /* ── Card (scheda di cantina) ── */
     .card {
-      background: var(--color-surface);
-      border: 1px solid color-mix(in srgb, var(--color-border) 78%, transparent);
-      border-radius: 24px;
+      position: relative;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-left: 3px solid var(--cat-color, var(--vine));
+      border-radius: var(--radius-lg);
       overflow: hidden;
       box-shadow: var(--shadow-sm);
-      transition: transform var(--transition-interactive), box-shadow var(--transition-interactive), border-color var(--transition-interactive);
+      opacity: 0; transform: translateY(8px);
+      animation: cardIn 420ms var(--ease) forwards;
+      transition: transform var(--t-fast), box-shadow var(--t-fast), border-color var(--t-fast);
     }
+    @keyframes cardIn { to { opacity: 1; transform: translateY(0); } }
 
-    .card:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-md);
-      border-color: color-mix(in srgb, var(--color-primary) 22%, var(--color-border));
-    }
-
-    .card.open {
-      border-color: color-mix(in srgb, var(--color-primary) 30%, var(--color-border));
-      box-shadow: var(--shadow-md);
-    }
+    .card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+    .card.open  { box-shadow: var(--shadow-md); }
 
     .card-top {
-      padding: var(--space-5);
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: var(--space-3);
-      cursor: pointer;
+      padding: var(--space-4) var(--space-5);
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: var(--space-3); cursor: pointer;
     }
 
     .card-title h4 {
       font-family: var(--font-display);
-      font-size: var(--text-sm);
-      font-weight: 700;
+      font-size: var(--text-base);
+      font-weight: 600;
       line-height: 1.25;
+      letter-spacing: -0.005em;
     }
-
     .card-title p {
-      margin-top: var(--space-1);
-      color: var(--color-text-muted);
-      font-size: var(--text-xs);
-      max-width: 52ch;
+      margin-top: 5px; color: var(--ink-muted);
+      font-size: var(--text-xs); line-height: 1.5; max-width: 46ch;
     }
 
-    .pricebox { display: flex; flex-direction: column; align-items: flex-end; gap: var(--space-1); flex-shrink: 0; }
-
+    .pricebox { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; flex-shrink: 0; }
     .price {
-      font-size: var(--text-sm);
-      font-weight: 800;
-      color: var(--color-primary);
-      letter-spacing: -0.01em;
+      font-family: var(--font-mono);
+      font-size: var(--text-sm); font-weight: 600;
+      color: var(--vine);
+      background: color-mix(in srgb, var(--vine) 12%, var(--surface));
+      border: 1px solid color-mix(in srgb, var(--vine) 24%, var(--line));
+      padding: 2px 9px; border-radius: var(--radius-full);
+      white-space: nowrap;
     }
-
     .chevron {
-      font-size: 0.85rem;
-      color: var(--color-text-faint);
-      flex-shrink: 0;
-      align-self: flex-start;
-      margin-top: 2px;
-      transition: color var(--transition-interactive);
+      font-size: .85rem; color: var(--ink-faint); flex-shrink: 0;
+      align-self: flex-start; margin-top: 2px;
+      transition: color var(--t-fast), transform var(--t-med);
     }
+    .card.open .chevron { color: var(--vine); transform: rotate(180deg); }
 
-    .card.open .chevron { color: var(--color-primary); }
-
-    /* ── Badges ── */
-    .badges {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-1);
+    /* ── Preview strip (anteprima prima di aprire) ── */
+    .preview {
+      display: flex; align-items: center; gap: var(--space-2);
       padding: 0 var(--space-5) var(--space-4);
+      flex-wrap: wrap;
     }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      min-height: 24px;
-      padding: 0 var(--space-2);
-      border-radius: var(--radius-full);
-      font-size: var(--text-xs);
-      font-weight: 700;
-      letter-spacing: 0.03em;
-      border: 1px solid transparent;
+    .preview-chip {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: var(--text-xs); font-weight: 600;
+      color: var(--chip-color, var(--ink-muted));
+      background: color-mix(in srgb, var(--chip-color, var(--ink-muted)) 12%, var(--surface));
+      border: 1px solid color-mix(in srgb, var(--chip-color, var(--ink-muted)) 26%, var(--line));
+      padding: 3px 9px 3px 7px; border-radius: var(--radius-full);
     }
-
-    .badge-vini   { background: var(--color-gold-soft);   color: var(--color-gold);   border-color: color-mix(in srgb, var(--color-gold)   20%, transparent); }
-    .badge-bev    { background: var(--color-blue-soft);   color: var(--color-blue);   border-color: color-mix(in srgb, var(--color-blue)   20%, transparent); }
-    .badge-birra  { background: var(--color-ok-soft);     color: var(--color-ok);     border-color: color-mix(in srgb, var(--color-ok)     20%, transparent); }
+    .preview-chip svg { width: 13px; height: 13px; }
+    .preview-flag {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-family: var(--font-mono);
+      font-size: 0.66rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase;
+      color: var(--brass);
+      background: color-mix(in srgb, var(--brass) 14%, var(--surface));
+      border: 1px solid color-mix(in srgb, var(--brass) 30%, var(--line));
+      padding: 3px 8px; border-radius: var(--radius-full);
+    }
+    .preview-flag svg { width: 11px; height: 11px; }
+    .preview-flag.is-official { color: var(--vine); background: color-mix(in srgb, var(--vine) 14%, var(--surface)); border-color: color-mix(in srgb, var(--vine) 30%, var(--line)); }
 
     /* ── Detail panel ── */
     .detail {
-      display: none;
-      border-top: 1px solid color-mix(in srgb, var(--color-border) 70%, transparent);
-      background: color-mix(in srgb, var(--color-surface-2) 75%, var(--color-surface));
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows var(--t-med);
+      border-top: 1px solid transparent;
     }
-
-    .card.open .detail { display: block; }
+    .detail > .detail-inner { overflow: hidden; min-height: 0; }
+    .card.open .detail { grid-template-rows: 1fr; border-top-color: color-mix(in srgb, var(--line) 80%, transparent); }
 
     .detail-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--space-3);
-      padding: var(--space-5);
+      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-4); padding: var(--space-5);
     }
 
     .detail-block {
-      background: var(--color-surface);
-      border: 1px solid color-mix(in srgb, var(--color-border) 70%, transparent);
-      border-radius: var(--radius-xl);
+      background: color-mix(in srgb, var(--surface-2) 60%, var(--surface));
+      border: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
+      border-radius: var(--radius-md);
       padding: var(--space-4);
     }
 
-    .detail-block.full { grid-column: 1 / -1; }
-
     .detail-label {
-      font-size: var(--text-xs);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--color-text-faint);
-      font-weight: 800;
-      margin-bottom: var(--space-2);
+      font-family: var(--font-mono);
+      font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.1em;
+      color: var(--ink-faint); font-weight: 600; margin-bottom: var(--space-3);
+      display: flex; align-items: center; gap: 6px;
     }
+    .detail-label svg { width: 13px; height: 13px; }
 
-    .detail-value {
-      font-size: var(--text-sm);
-      color: var(--color-text);
-      line-height: 1.6;
+    /* ── Pairing rows (righe del taccuino) ── */
+    .pick-list { display: grid; gap: var(--space-3); }
+    .pick-list li { list-style: none; }
+
+    .pick {
+      display: flex; align-items: flex-start; gap: 9px;
+      padding-left: 9px;
+      border-left: 2px solid color-mix(in srgb, var(--pick-color, var(--ink-faint)) 55%, transparent);
     }
+    .pick-icon {
+      width: 20px; height: 20px; flex-shrink: 0; margin-top: 1px;
+      color: var(--pick-color, var(--ink-muted));
+    }
+    .pick-icon svg { width: 100%; height: 100%; }
+    .pick-body { min-width: 0; flex: 1; }
 
-    .detail-value ul { margin: 0; padding-left: var(--space-5); }
+    .pick-head { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 8px; }
+    .pick-name { font-family: var(--font-display); font-weight: 600; font-size: var(--text-sm); color: var(--ink); }
+    .pick-producer { font-size: var(--text-xs); font-style: italic; color: var(--ink-faint); }
+    .pick-price {
+      font-family: var(--font-mono); font-size: 0.72rem; font-weight: 600;
+      color: var(--pick-color, var(--ink-muted));
+      background: color-mix(in srgb, var(--pick-color, var(--ink-muted)) 13%, var(--surface));
+      padding: 1px 7px; border-radius: var(--radius-full);
+      margin-left: auto; white-space: nowrap;
+    }
+    .pick-badge {
+      display: inline-flex; align-items: center; gap: 3px;
+      font-family: var(--font-mono); font-size: 0.62rem; font-weight: 700;
+      letter-spacing: .05em; text-transform: uppercase;
+      padding: 1px 6px; border-radius: var(--radius-full);
+      color: var(--brass); background: color-mix(in srgb, var(--brass) 16%, var(--surface));
+    }
+    .pick-badge.is-official { color: var(--vine); background: color-mix(in srgb, var(--vine) 16%, var(--surface)); }
+    .pick-badge svg { width: 9px; height: 9px; }
 
-    .detail-value li { margin-bottom: var(--space-2); }
-    .detail-value li:last-child { margin-bottom: 0; }
+    .pick-note { font-size: var(--text-xs); color: var(--ink-muted); line-height: 1.55; margin-top: 3px; }
 
-    .pick-name { font-weight: 700; color: var(--color-primary); }
+    .pick-alt {
+      display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap;
+      margin-top: 7px; padding-top: 7px;
+      border-top: 1px dashed color-mix(in srgb, var(--line) 90%, transparent);
+      font-size: var(--text-xs); color: var(--ink-faint);
+    }
+    .pick-alt .alt-tag { font-family: var(--font-mono); font-size: 0.64rem; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-faint); flex-shrink: 0; }
+    .pick-alt .alt-name { font-weight: 600; color: var(--ink-muted); }
+    .pick-alt .alt-price { font-family: var(--font-mono); color: var(--ink-faint); }
+    .pick-alt .alt-note { color: var(--ink-faint); }
 
     /* ── Note operative ── */
     .notes-section {
-      background: var(--color-surface);
-      border: 1px solid color-mix(in srgb, var(--color-border) 78%, transparent);
-      border-radius: 24px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-left: 3px solid var(--brass);
+      border-radius: var(--radius-lg);
       overflow: hidden;
       box-shadow: var(--shadow-sm);
     }
-
-    .notes-section ul { padding: var(--space-5) var(--space-5) var(--space-5) calc(var(--space-5) + var(--space-4)); }
-
+    .notes-section ul { padding: var(--space-5); display: grid; gap: var(--space-3); }
     .notes-section li {
-      margin-bottom: var(--space-3);
-      font-size: var(--text-sm);
-      color: var(--color-text);
-      line-height: 1.6;
+      list-style: none;
+      display: flex; gap: 10px;
+      font-size: var(--text-sm); color: var(--ink); line-height: 1.6;
     }
-
-    .notes-section li:last-child { margin-bottom: 0; }
+    .note-index {
+      font-family: var(--font-mono); font-size: var(--text-xs); font-weight: 600;
+      color: var(--brass); flex-shrink: 0; padding-top: 1px;
+    }
 
     /* ── Empty state ── */
     .empty {
       padding: var(--space-10) var(--space-5);
-      text-align: center;
-      color: var(--color-text-muted);
-      background: var(--color-surface);
-      border: 1px solid color-mix(in srgb, var(--color-border) 70%, transparent);
-      border-radius: 24px;
+      text-align: center; color: var(--ink-muted);
+      background: var(--surface);
+      border: 1px dashed var(--line);
+      border-radius: var(--radius-lg);
     }
+    .empty svg { width: 34px; height: 34px; color: var(--ink-faint); margin: 0 auto var(--space-3); }
 
     /* ── Responsive ── */
     @media (max-width: 900px) {
@@ -481,19 +488,20 @@
     }
 
     @media (max-width: 760px) {
-      .topbar-inner,
-      .shell,
-      .footer { width: min(100%, calc(100% - 1rem)); }
-
-      .brand p { display: none; }
+      .topbar-inner, .shell, .footer { width: min(100%, calc(100% - 1.2rem)); }
+      .brand-subtitle { display: none; }
     }
 
     @media (max-width: 480px) {
-      .tabs    { gap: var(--space-1); }
-      .tab     { font-size: 0.78rem; padding: var(--space-2) var(--space-3); }
+      .tabs    { gap: 6px; }
+      .tab     { font-size: 0.72rem; padding: 7px var(--space-3); }
       .card-top { padding: var(--space-4); }
-      .badges  { padding: 0 var(--space-4) var(--space-3); }
+      .preview { padding: 0 var(--space-4) var(--space-3); }
+      .detail-grid { padding: var(--space-4); gap: var(--space-3); }
     }
+
+    /* Focus visibile per accessibilità */
+    :focus-visible { outline: 2px solid var(--vine); outline-offset: 2px; border-radius: var(--radius-sm); }
 
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
@@ -501,23 +509,40 @@
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
       }
+      .card { opacity: 1; transform: none; animation: none; }
     }
-  </style>
+</style>
 </head>
 <body>
 
 <header class="topbar">
   <div class="topbar-inner">
     <div class="brand">
-      <a href="index.html" class="brand-back" aria-label="Torna alla home">←</a>
-      <div class="brand-mark" aria-hidden="true">🍽️</div>
+      <a href="index.html" class="brand-back" aria-label="Torna alla home">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+      </a>
+      <div class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <circle cx="9" cy="8" r="2.3"/><circle cx="15" cy="8" r="2.3"/>
+          <circle cx="6.3" cy="12" r="2.1"/><circle cx="12" cy="12" r="2.1"/><circle cx="17.7" cy="12" r="2.1"/>
+          <circle cx="9" cy="15.6" r="1.9"/><circle cx="15" cy="15.6" r="1.9"/>
+          <circle cx="12" cy="18.8" r="1.7"/>
+          <path d="M12 3v3.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+        </svg>
+      </div>
       <div class="brand-copy">
         <div class="brand-title">Abbinamenti</div>
-        <div class="brand-subtitle">Vini, cocktail e birre per ogni piatto</div>
+        <div class="brand-subtitle">Vini · Gin Tonic · Cocktail · Birra</div>
       </div>
     </div>
     <button class="theme-toggle" id="themeToggle" type="button" aria-label="Cambia tema">
-      <span id="themeIcon">🌙</span>
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+        <circle cx="12" cy="12" r="4.2"/>
+        <path d="M12 2.5v3M12 18.5v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2.5 12h3M18.5 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/>
+      </svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
     </button>
   </div>
 </header>
@@ -537,15 +562,25 @@
   </div>
 
   <div class="tabs" id="tabs" role="tablist" aria-label="Filtra per categoria">
-    <button class="tab active" data-f="all"      role="tab">Tutti</button>
-    <button class="tab" data-f="antipasti"       role="tab">🍽️ Antipasti</button>
-    <button class="tab" data-f="insalate"        role="tab">🥗 Insalate</button>
-    <button class="tab" data-f="primi"           role="tab">🍝 Primi</button>
-    <button class="tab" data-f="griglia"         role="tab">🔥 Griglia</button>
-    <button class="tab" data-f="pinse"           role="tab">🍕 Pinse</button>
-    <button class="tab" data-f="burger"          role="tab">🍔 Burger</button>
-    <button class="tab" data-f="dolci"           role="tab">🍮 Dolci</button>
-    <button class="tab" data-f="note"            role="tab">💡 Note</button>
+    <button class="tab active" data-f="all" role="tab">Tutti</button>
+    <button class="tab" data-f="antipasti" role="tab">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg>
+      Condividi</button>
+    <button class="tab" data-f="griglia" role="tab">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18M3 14h18"/></svg>
+      Griglia</button>
+    <button class="tab" data-f="pinse" role="tab">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 3l8 17H4z"/><circle cx="12" cy="11" r="1" fill="currentColor" stroke="none"/><circle cx="10" cy="15" r="1" fill="currentColor" stroke="none"/><circle cx="14" cy="15" r="1" fill="currentColor" stroke="none"/></svg>
+      Pinse</button>
+    <button class="tab" data-f="burger" role="tab">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 8h16M4 12h16M4 16h16"/></svg>
+      Burger</button>
+    <button class="tab" data-f="dolci" role="tab">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="7" y="7" width="10" height="10" rx="2" transform="rotate(45 12 12)"/></svg>
+      Dolci</button>
+    <button class="tab" data-f="note" role="tab">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="5" y="4" width="14" height="16" rx="2"/><path d="M8 9h8M8 13h5"/></svg>
+      Note</button>
   </div>
 
   <main class="content" id="main"></main>
@@ -555,514 +590,412 @@
 var A = [
   {id:1,cat:"antipasti",nome:"Carpaccio del Bosco",pr:"15€",desc:"Manzo al ginepro e odori toscani, ricotta condita, capperi in fiore, salsa di mele e senape",
    vini:[
-    "🥇 Sauvignon \"Nico\" – Stroblhof (32€) — La freschezza erbacea sostiene la senape, l'agrume taglia la grassezza della ricotta, le note tropicali si abbinano agli odori toscani",
-    "🔄 Kerner – Taschlerhof (28€) (IN ARRIVO) — Mineralità alpina e aromaticità fresca con la carne cruda; i fiori bianchi reggono il ginepro",
-    "🍷 Vernaccia \"Selvabianca\" (6€ al bicchiere) — Abbinamento territoriale classico: mineralità e finale amaricante esaltano i capperi"
+    "🥇 Sauvignon \"Nico\" – Stroblhof (32€) — l'acidità erbacea regge la senape e pulisce la ricotta, mentre il frutto tropicale dialoga con la salsa di mele",
+    "🔄 Vernaccia \"Selvabianca\" (6€ al bicchiere) — sapidità e finale ammandorlato in sintonia con i capperi",
+    "🍷 Rosato \"Cremisi\" (6€ al bicchiere) — fruttato e fresco, alternativa più morbida per chi preferisce il rosato"
    ],
    bev:[
-    "🍸 G&T: Rame Italian Dry (10€) — Mediterraneo e aromatico; Alt: Tanqueray Ten (10€)",
-    "🍹 Cocktail: Paloma (10€) — Agrumi e sale in sinergia con i capperi; Alt: Basil Smash (10€)",
-    "🍺 Birra: Sigeric Blonde (6.5€) — Leggera e pulita"
+    "🍸 G&T: Rame Italian Dry ✅ (10€) — il ginepro del gin dialoga con quello della marinatura del carpaccio (abbinamento ufficiale del menù); Alt: Barbarasa London Dry (10€)",
+    "🍹 Cocktail: Basil Smash (10€) — acidità e freschezza erbacea puliscono la ricotta e bilanciano la senape; Alt: Sprissi (9€)",
+    "🍺 Birra: Strade Blanche (6,50€) — blanche agrumata e speziata, richiama il pepe della senape; Alt: Sigeric Blonde (6,50€)"
    ]},
 
-  {id:2,cat:"antipasti",nome:"Degustazione di Battute al Coltello",pr:"18€",desc:"Maionese all'aglio nero, cipolla croccante, burrata, tartufo nero",
+  {id:2,cat:"antipasti",nome:"Degustazione di Battute al Coltello",pr:"18€",desc:"Maionese all'aglio nero e cipolla croccante; burrata e tartufo nero",
    vini:[
-    "🥇 Chardonnay \"Schwarzhaus\" – Stroblhof (30€) — Struttura e frutto bilanciano la grassezza della burrata; la vaniglia si sposa con il tartufo nero",
-    "🔄 Nebbiolo Langhe – Ettore Germano (26€) — Terroso, tannico, naturalmente affine al tartufo; l'acidità vivace pulisce la burrata",
-    "🍷 Chianti \"Campale\" (6€ al bicchiere) — Per chi preferisce il rosso con il tartufo"
+    "🥇 Chardonnay \"Schwarzhaus\" – Stroblhof (30€) — struttura e nota burrosa reggono la burrata, il frutto maturo si sposa con il tartufo nero",
+    "🔄 Nebbiolo Langhe – Ettore Germano (26€) — profilo terroso naturalmente affine al tartufo, il tannino pulisce la maionese",
+    "🍷 Chianti \"Campale\" (6€ al bicchiere) — per chi preferisce restare su un rosso semplice e territoriale"
    ],
    bev:[
-    "🍸 G&T: Monkey 47 (14€) — Il più complesso della lista; Alt: Piero Dry Gin (12€)",
-    "🍹 Cocktail: Negroni Fumé (12€) — Il mezcal affumicato crea sinergia con il tartufo; Alt: Sua Maestà il Martini (12€)",
-    "🍺 Birra: Roma IPA (6.5€) — L'amaro del luppolo funziona bene con il tartufo"
+    "🍸 G&T: Monkey 47 (14€) — il gin più complesso della carta, botaniche speziate che reggono il tartufo; Alt: Piero Dry Gin (12€)",
+    "🍹 Cocktail: Negroni Fumé ⭐ (12€) — il mezcal affumicato crea eco diretta con il tartufo nero, l'amaro pulisce la burrata; Alt: Sua Maestà il Martini (12€)",
+    "🍺 Birra: Roma IPA (6,50€) — il luppolo amaro sgrassa maionese e burrata; Alt: Nikulas Tripel (6,50€)"
    ]},
 
   {id:3,cat:"antipasti",nome:"Pimp My Caprese",pr:"12€",desc:"Caprese di bufala, pomodorini gialli e rossi, chips di basilico, pesto di basilico",
    vini:[
-    "🥇 Vernaccia \"Selvabianca\" – Colombaio (24€ / 6€ al bicchiere) — Abbinamento del territorio per eccellenza",
-    "🔄 Vermentino Colli di Luni – Lambruschi (26€) — Sapidità iodata e erbe mediterranee in perfetta sinergia con il pesto di basilico",
-    "🍷 Soave Classico – Pieropan (24€) — Floreale, fresco, non sovrastante"
+    "🥇 Vernaccia \"Selvabianca\" (24€ / 6€ al bicchiere) — il vino del territorio per eccellenza, freschezza e sapidità in sintonia con pomodoro e basilico",
+    "🔄 Vermentino – Lambruschi (26€) — sapidità iodata ed erbe mediterranee che dialogano col pesto",
+    "🍷 Soave Classico – Pieropan (24€) — floreale e delicato, non copre la freschezza della bufala"
    ],
    bev:[
-    "🍸 G&T: Upperhand ⭐ (10€) — Basilico e limone in affinità diretta; Alt: Hendrick's (10€)",
-    "🍹 Cocktail: Basil Smash ⭐ (10€) — Il basilico è ingrediente condiviso; Alt: Hugo Spritz (10€)",
-    "🍺 Birra: Strade Blanche (6.5€) — Floreale e agrumata"
+    "🍸 G&T: Upperhand ⭐ (10€) — basilico e limone in affinità diretta con il piatto; Alt: Hendrick's (10€)",
+    "🍹 Cocktail: Basil Smash ⭐ (10€) — ingrediente condiviso, massima sinergia aromatica; Alt: Hugo Spritz (10€)",
+    "🍺 Birra: Strade Blanche (6,50€) — agrumata e floreale, non copre il basilico; Alt: Sigeric Blonde (6,50€)"
    ]},
 
-  {id:4,cat:"antipasti",nome:"Coccole, Crudo & Burrata",pr:"12€",desc:"Coccole, prosciutto crudo stagionato, burratina",
+  {id:4,cat:"antipasti",nome:"Melanzana alla Issi",pr:"14€",desc:"Barchetta di melanzana alla parmigiana con provola affumicata e pesto verde",
    vini:[
-    "🥇 Lumis Brut – Colombaio (24€ / 6€ al bicchiere) — Le bollicine puliscono la grassezza della burrata e valorizzano il crudo",
-    "🔄 Vernaccia \"Selvabianca\" (6€ al bicchiere) — Freschezza e mineralità toscana",
-    "🍷 Rosato \"Cremisi\" (6€ al bicchiere) — Fruttato e versatile con salumi e burrata"
+    "🥇 Etna Bianco – Benanti (33€) — mineralità vulcanica e sapidità tagliano la grassezza della parmigiana e reggono l'affumicatura",
+    "🔄 Soave Classico – Pieropan (24€) — delicato e floreale, la freschezza pulisce il fritto",
+    "🍷 Ciliegiolo – Antonio Camillo (24€) — rosso leggero e fruttato che non sovrasta ricotta e pesto"
    ],
    bev:[
-    "🍸 G&T: J Rose (12€) — Floreale e fruttato; Alt: Nordes (10€)",
-    "🍹 Cocktail: Sprissi (9€) — Bollicine con i salumi è un classico; Alt: Spritz Aperol (8€)",
-    "🍺 Birra: Sigeric Blonde (6.5€)"
+    "🍸 G&T: Maite Fiamma (12€) — leggermente affumicato, richiama la provola; Alt: Rame Italian Dry (10€)",
+    "🍹 Cocktail: Negroni (8€) — l'amaro del Campari taglia la melanzana fritta; Alt: Americano (8€)",
+    "🍺 Birra: Divago — Dubbel (6,50€) — maltata e speziata, regge affumicatura e frittura; Alt: Sigeric Blonde (6,50€)"
    ]},
 
-  {id:5,cat:"antipasti",nome:"Melanzana alla Issi",pr:"14€",desc:"Barchetta di melanzana alla parmigiana, provola affumicata, pesto verde",
+  {id:5,cat:"antipasti",nome:"Burro e Acciughe 2.0",pr:"13€",desc:"Pan bauletto croccante dorato nel burro, acciughe sotto pesto e salsa agli agrumi",
    vini:[
-    "🥇 Etna Bianco – Benanti (33€) — Mineralità vulcanica, sapidità e freschezza tagliano la grassezza della parmigiana",
-    "🔄 Soave Classico – Pieropan (24€) — Delicato, floreale, non copre i sapori; freschezza pulisce il fritto",
-    "🍷 Ciliegiolo – Antonio Camillo (24€) — Rosso leggero e fruttato, non sovrasta la delicatezza della ricotta e del pesto"
+    "🥇 Riesling Wehlener Sonnenuhr Spätlese Trocken – Kerpen (30€) — acidità tagliente e mineralità ideali con burro e agrumi, la sapidità dell'acciuga trova specchio nella sua sapidità",
+    "🔄 Vernaccia \"Selvabianca\" (6€ al bicchiere) — la nota ammandorlata esalta l'acciuga",
+    "🍷 Vermentino – Lambruschi (26€) — sapidità e note iodate in sinergia diretta con le acciughe"
    ],
    bev:[
-    "🍸 G&T: Maite Fiamma (12€) — Leggermente affumicato, richiama la provola; Alt: Rame Italian Dry (10€)",
-    "🍹 Cocktail: Negroni (8€) — L'amaro del Campari con la melanzana fritta; Alt: Americano (8€)",
-    "🍺 Birra: Divago Amber (6.5€)"
+    "🍸 G&T: Poseidon ⭐ (12€) — marino, fresco, agrumato, dialogo diretto con l'acciuga; Alt: Barbarasa Navy (12€)",
+    "🍹 Cocktail: Paloma (10€) — agrumi e sale in sinergia con le acciughe; Alt: Margarita (10€)",
+    "🍺 Birra: Strade Blanche (6,50€) — agrumata, sgrassa il burro; Alt: Corona (4€) — con una fetta di lime richiama gli agrumi della salsa"
    ]},
 
-  {id:6,cat:"antipasti",nome:"Burro e Acciughe 2.0",pr:"13€",desc:"Pan bauletto croccante dorato nel burro, acciughe sotto pesto, salsa agli agrumi",
+  {id:6,cat:"antipasti",nome:"Gran Tagliere del Poggio",pr:"30€",desc:"Selezione di salumi e pecorini con mostarde, assaggio dei nostri antipasti e tipicità del luogo",
    vini:[
-    "🥇 Riesling Spätlese Trocken – Kerpen (30€) (IN ARRIVO) — Acidità tagliente e mineralità con burro e agrumi",
-    "🔄 Vernaccia \"Selvabianca\" (6€ al bicchiere) — La nota amaricante esalta le acciughe",
-    "🍷 Vermentino – Lambruschi (26€) — Sapidità e note iodate in sinergia diretta con le acciughe"
+    "🥇 Vernaccia \"Albereta\" – Colombaio (46€) — il vino del territorio nella versione più strutturata, regge salumi e pecorini stagionati",
+    "🔄 Chianti CS Riserva \"Il Priore\" – Colombaio (36€) — abbinamento aziendale, il tannino pulisce il grasso dei salumi",
+    "🍷 Rosato \"Cremisi\" (6€ al bicchiere) — versatile tra salumi e formaggi, per chi preferisce restare leggero"
    ],
    bev:[
-    "🍸 G&T: Poseidon ⭐ (12€) — Marino, fresco, agrumato; Alt: Barbarasa Navy (12€)",
-    "🍹 Cocktail: Paloma (10€) — Agrumi e sale in sinergia con le acciughe; Alt: Margarita (10€)",
-    "🍺 Birra: Strade Blanche (6.5€)"
+    "🍸 G&T: Rame Italian Dry (10€) — mediterraneo, dialoga coi salumi toscani; Alt: Frantuono (12€) — sentori di oliva, gastronomico",
+    "🍹 Cocktail: Negroni (8€) — l'aperitivo italiano per eccellenza con affettati e formaggi; Alt: Americano (8€)",
+    "🍺 Birra: Divago — Dubbel (6,50€) — malto e struttura per pecorini stagionati; Alt: Nikulas Tripel (6,50€)"
    ]},
 
-  {id:7,cat:"antipasti",nome:"Frittino del Poggio",pr:"18€",desc:"Fiori di zucca ripieni di ricotta e mentuccia, salvia fritta, pane toscano, pappa al pomodoro, pollo crispy alla paprika con mayo al gin e pepe rosa",
+  {id:7,cat:"antipasti",nome:"Coccole, Crudo & Burrata",pr:"12€",desc:"Coccole (pane fritto), prosciutto crudo stagionato, burratina cremosa",
    vini:[
-    "🥇 Altalanga Extra Brut – Ettore Germano (40€) — Perlage fine e acidità tagliente per fritture e grassezze",
-    "🔄 Lumis Brut – Colombaio (6€ al bicchiere) — Soluzione più accessibile ed efficace sulle fritture",
-    "🍷 Trento DOC \"Perlè\" – Ferrari (60€) — Upgrade gourmet assoluto"
+    "🥇 Spumante Brut \"Lumis\" – Colombaio (24€ / 6€ al bicchiere) — le bollicine puliscono il fritto e la grassezza della burrata, valorizzando il crudo",
+    "🔄 Vernaccia \"Selvabianca\" (6€ al bicchiere) — freschezza e mineralità toscana",
+    "🍷 Rosato \"Cremisi\" (6€ al bicchiere) — fruttato e versatile con salumi e burrata"
    ],
    bev:[
-    "🍸 G&T: Barbarasa London Dry ✅ (10€) — Secco, aromatico, agrumato; Alt: Bombay Dry (8€)",
-    "🍹 Cocktail: Mojito (10€) — Menta e lime tagliano la grassezza; Alt: Tropical Daiquiri Frozen (10€)",
-    "🍺 Birra: Roma IPA ⭐ (6.5€) — L'amaro luppolato è perfetto con le fritture"
+    "🍸 G&T: J Rose (12€) — floreale e fruttato, leggero con salumi e burrata; Alt: Nordes (10€)",
+    "🍹 Cocktail: Sprissi ⭐ (9€) — bollicine e amaro, un classico con i salumi; Alt: Spritz Aperol / Campari (8€)",
+    "🍺 Birra: Sigeric Blonde (6,50€) — leggera, pulisce il fritto; Alt: Menabrea (4€)"
    ]},
 
-  {id:8,cat:"antipasti",nome:"Gran Tagliere del Poggio",pr:"30€",desc:"Selezione di salumi e pecorini, mostarde, assaggio di antipasti e tipicità del luogo",
+  {id:8,cat:"antipasti",nome:"Frittino del Poggio",pr:"18€",desc:"Fiori di zucca ripieni di ricotta e mentuccia, salvia fritta, pane toscano, pappa al pomodoro, pollo crispy alla paprika con mayo al gin e pepe rosa",
    vini:[
-    "🥇 Vernaccia \"Albereta\" – Colombaio (46€) — Il vino del territorio nella sua espressione più strutturata",
-    "🔄 Chianti CS Riserva \"Il Priore\" – Colombaio (36€) — Abbinamento tutto aziendale con salumi e pecorino",
-    "🍷 Rosato \"Cremisi\" (6€ al bicchiere) — Versatile tra salumi e formaggi"
+    "🥇 Altalanga Extra Brut – Ettore Germano (40€) — perlage fine e acidità tagliente ideali su fritture e grassezze miste",
+    "🔄 Spumante Brut \"Lumis\" (6€ al bicchiere) — soluzione più accessibile ma ugualmente efficace sul fritto",
+    "🍷 Trento DOC \"Perlè\" – Ferrari (60€) — upgrade gourmet per chi vuole osare"
    ],
    bev:[
-    "🍸 G&T: Rame Italian Dry (10€) — Mediterraneo con i salumi toscani; Alt: Frantuono (12€)",
-    "🍹 Cocktail: Negroni (8€) — Aperitivo italiano per eccellenza; Alt: Americano (8€)",
-    "🍺 Birra: Divago Amber (6.5€) — Malto e struttura per pecorini stagionati"
+    "🍸 G&T: Barbarasa London Dry ✅ (10€) — secco, aromatico, agrumato: richiama il gin già presente nella mayo del pollo (abbinamento ufficiale del menù); Alt: Bombay Dry (8€)",
+    "🍹 Cocktail: Mojito (10€) — menta e lime tagliano la grassezza della frittura; Alt: Tropical Daiquiri Frozen (10€)",
+    "🍺 Birra: Roma IPA ⭐ (6,50€) — l'amaro luppolato è perfetto con le fritture; Alt: Strade Blanche (6,50€)"
    ]},
 
-  {id:9,cat:"insalate",nome:"Insalatona del Poggio",pr:"10€",desc:"Cavolo viola, pecorino, noci e miele",
+  {id:9,cat:"griglia",nome:"Il Pollaccio",pr:"16€",desc:"Sovraccoscia di Galletto CBT alle erbe con il suo ristretto",
    vini:[
-    "🥇 Gewurztraminer – Taschlerhof (32€) — Aromaticità e dolcezza percettiva sposano perfettamente miele e noci",
-    "🔄 Kerner – Taschlerhof (28€) (IN ARRIVO) — Più fresco e leggero, aromatico con il cavolo viola marinato",
-    "🍷 Vernaccia \"Selvabianca\" (6€ al bicchiere) — Abbinamento territoriale semplice ed efficace"
+    "🥇 Sauvignon \"Nico\" – Stroblhof (32€) — la nota erbacea dialoga con le erbe della marinatura, l'acidità pulisce il ristretto",
+    "🔄 Vernaccia \"Selvabianca\" (6€ al bicchiere) — semplice e territoriale, buona sapidità per il fondo di cottura",
+    "🍷 Pinot Nero – Panizzi (28€) — rosso leggero e delicato che non sovrasta il pollo"
    ],
    bev:[
-    "🍸 G&T: J Rose (12€) — Floreale e fruttato; Alt: Hendrick's (10€)",
-    "🍹 Cocktail: Hugo Spritz (10€) — Richiama il miele in modo naturale; Alt: Sprissi (9€)",
-    "🍺 Birra: Nikulas Tripel (6.5€)"
+    "🍸 G&T: Nordes (10€) — morbido e fruttato, accompagna senza coprire le erbe; Alt: Hendrick's (10€)",
+    "🍹 Cocktail: Hugo Spritz (10€) — fresco e floreale, leggero sul pollo; Alt: Sprissi (9€)",
+    "🍺 Birra: Sigeric Blonde (6,50€) — pulita, lascia parlare le erbe; Alt: Strade Blanche (6,50€)"
    ]},
 
-  {id:10,cat:"insalate",nome:"Insalatona di Tonno",pr:"10€",desc:"Tonno, pomodorini, olive",
+  {id:10,cat:"griglia",nome:"Le Rostinciane",pr:"16€",desc:"Costine di maiale in salsa BBQ",
    vini:[
-    "🥇 Vermentino – Lambruschi (26€) — Sapidità marina e note iodate in perfetta sintonia con il tonno",
-    "🔄 Etna Bianco – Benanti (33€) — Mineralità vulcanica e note salmastre",
+    "🥇 Ciliegiolo – Antonio Camillo (24€) — frutto rosso fresco e tannino morbido, bilancia la dolcezza del BBQ",
+    "🔄 Chianti \"Campale\" (6€ al bicchiere) — semplice e territoriale, il tannino sgrassa",
+    "🍷 Bolgheri Rosso – Le Macchiole (38€) — per chi cerca più struttura e frutta scura"
    ],
    bev:[
-    "🍸 G&T: Poseidon (12€) — Marino, fresco, agrumato; Alt: Maite Spiaggialunga (12€)",
-    "🍹 Cocktail: Paloma (10€) — Agrumi e sale con il tonno; Alt: Margarita (10€)",
-    "🍺 Birra: Strade Blanche (6.5€)"
+    "🍸 G&T: Rame London Dry (10€) — speziato e pepato, tiene testa al BBQ; Alt: Monkey 47 (14€)",
+    "🍹 Cocktail: Whisky Sour ⭐ (10€) — dolcezza e acidità agrumata bilanciano la sapidità dolce del BBQ; Alt: Moscow Mule (10€) — lo zenzero pulisce il grasso",
+    "🍺 Birra: Divago — Dubbel (6,50€) — malto scuro in sinergia col BBQ; Alt: Roma IPA (6,50€) — l'amaro luppolato contrasta la dolcezza"
    ]},
 
-  {id:11,cat:"insalate",nome:"Insalatona Greca",pr:"10€",desc:"Feta, mais, olive, mozzarelline",
+  {id:11,cat:"griglia",nome:"La Tagliata R&G",pr:"22€",desc:"Tagliata di manzo con rucola e salsa di grana",
    vini:[
-    "🥇 Sauvignon \"Nico\" – Stroblhof (32€) — Freschezza e note erbacee con feta e olive",
-    "🔄 Soave Classico – Pieropan (24€) — Delicato e floreale",
-    "🍷 Reguta Sauvignon (6€ al bicchiere, giacenza) — Stessa logica erbacea a prezzo accessibile"
+    "🥇 Chianti Classico – Riecine (35€) — eleganza toscana e tannino setoso per manzo e grana",
+    "🔄 Nebbiolo Langhe – Ettore Germano (26€) — tannino e acidità che puliscono la salsa di grana",
+    "🍷 Rosso di Montalcino – Castello Tricerchi (32€) — Sangiovese più concentrato per chi cerca struttura"
    ],
    bev:[
-    "🍸 G&T: Maite Spiaggialunga (12€) — Aromatico e mediterraneo; Alt: Rame Italian Dry (10€)",
-    "🍹 Cocktail: Hugo Spritz (10€) o Spritz Aperol (8€)",
-    "🍺 Birra: Strade Blanche (6.5€)"
+    "🍸 G&T: Piero Dry Gin (12€) — morbido ed elegante, non compete col grana; Alt: Frantuono (12€)",
+    "🍹 Cocktail: Issi Sour ⭐ (12€) — Chianti di San Gimignano nel cocktail, legame diretto col territorio della carne; Alt: Negroni (8€)",
+    "🍺 Birra: Nikulas Tripel (6,50€) — la più gastronomica, regge il grana; Alt: Divago — Dubbel (6,50€)"
    ]},
 
-  {id:12,cat:"insalate",nome:"Insalatona dell'Orto",pr:"10€",desc:"Pomodorini, carote, cetrioli, olive, pane croccante",
+  {id:12,cat:"griglia",nome:"La Tagliata del Poggio",pr:"22€",desc:"Tagliata di manzo con lardo e rosmarino",
    vini:[
-    "🥇 IGT Fonteuva Bianco – Colombaio (5€ al bicchiere) — Leggero e fresco, coerente con la semplicità del piatto",
-    "🔄 Soave Classico – Pieropan (24€) — Floreale e pulito",
-    "🍷 Vernaccia \"Selvabianca\" (6€ al bicchiere) — Abbinamento territoriale"
+    "🥇 Bolgheri Rosso – Le Macchiole (38€) — potenza e frutta nera per reggere il lardo",
+    "🔄 Chianti CS Riserva \"Il Priore\" – Colombaio (36€) — tannino strutturato, il rosmarino trova eco nelle note balsamiche",
+    "🍷 Chianti Classico – Riecine (35€) — eleganza toscana con la carne alla griglia"
    ],
    bev:[
-    "🍸 G&T: Upperhand (10€) — Leggero e agrumato; Alt: Bombay Dry (8€)",
-    "🍹 Cocktail: Hugo Spritz (10€) — Fresco e leggero; Alt: Sprissi (9€)",
-    "🍺 Birra: Sigeric Blonde (6.5€)"
+    "🍸 G&T: Monkey 47 ⭐ (14€) — complessità botanica che regge il lardo e il rosmarino; Alt: Maite Fiamma (12€) — leggermente affumicato",
+    "🍹 Cocktail: Issi Sour (12€) — il cocktail del territorio, ideale con carni nobili; Alt: Whisky Sour (10€)",
+    "🍺 Birra: Nikulas Tripel (6,50€) — struttura e speziatura per il lardo; Alt: Divago — Dubbel (6,50€)"
    ]},
 
-  {id:13,cat:"insalate",nome:"Insalatona di Pollo",pr:"12€",desc:"Pollo croccante, avocado, pomodorini, mango",
+  {id:13,cat:"griglia",nome:"La Picanha",pr:"22€",desc:"Picanha di manzo CBT con il suo ristretto",
    vini:[
-    "🥇 Kerner – Taschlerhof (28€) (IN ARRIVO) — Aromaticità fresca e tropicale con il mango",
-    "🔄 Sauvignon \"Nico\" – Stroblhof (32€) — Freschezza agrumata con il pollo croccante",
-    "🍷 Lumis Rosé – Colombaio (26€) — Fruttato con mango e avocado"
+    "🥇 Brunello di Montalcino – Castello Tricerchi (66€) — struttura tannica e profondità del Sangiovese per la ricchezza della picanha",
+    "🔄 Cabernet Franc \"Bacicolo\" – Colombaio (80€) — profilo speziato e concentrato per un taglio pregiato",
+    "🍷 Rosso di Montalcino – Castello Tricerchi (32€) — versione più accessibile con la stessa anima"
    ],
    bev:[
-    "🍸 G&T: Arigatuono (12€) — Elegante e agrumato; Alt: Tanqueray Ten (10€)",
-    "🍹 Cocktail: Tropical Daiquiri Frozen ⭐ (10€) — Mango in sinergia diretta; Alt: Paloma (10€)",
-    "🍺 Birra: Sigeric Blonde (6.5€)"
+    "🍸 G&T: Monkey 47 (14€) — il più complesso, per la carne più nobile della griglia; Alt: Barbarasa Navy (12€)",
+    "🍹 Cocktail: Issi Sour (12€) — territorio e struttura in un calice; Alt: Negroni Fumé (12€) — il mezcal affumicato dialoga con la crosta della picanha",
+    "🍺 Birra: Nikulas Tripel ⭐ (6,50€) — la birra più gastronomica per il taglio più pregiato; Alt: Divago — Dubbel (6,50€)"
    ]},
 
-  {id:14,cat:"primi",nome:"Gnudi al Burro e Salvia",pr:"14€",desc:"Gnudi di ricotta e spinaci, burro fuso, salvia croccante, parmigiano",
+  {id:14,cat:"griglia",nome:"Gli Arrosticini",pr:"18€",desc:"Arrosticini di pecora con BBQ alla birra e salsa tzatziki",
    vini:[
-    "🥇 Chardonnay \"Schwarzhaus\" – Stroblhof (30€) — Struttura e note burrosa in sinergia con il burro fuso",
-    "🔄 Vernaccia \"Selvabianca\" (6€ al bicchiere) — Mineralità e finale amaricante con la salvia",
-    "🍷 Soave Classico – Pieropan (24€) — Floreale, non invasivo"
+    "🥇 Etna Rosso – Tenuta delle Terre Nere (45€) — mineralità vulcanica e tannino elegante reggono la pecora e il BBQ",
+    "🔄 Chianti CS Riserva \"Il Priore\" – Colombaio (36€) — Sangiovese strutturato, adatto alla selvaggina",
+    "🍷 Chianti \"Campale\" (6€ al bicchiere) — semplice e territoriale"
    ],
    bev:[
-    "🍸 G&T: Nordes (10€) — Floreale e delicato; Alt: Hendrick's (10€)",
-    "🍹 Cocktail: Hugo Spritz (10€) — Fresco e non invasivo; Alt: Sprissi (9€)",
-    "🍺 Birra: Strade Blanche (6.5€)"
+    "🍸 G&T: Upperhand ✅ (10€) — fresco, note di basilico e limone che rinfrescano dopo il grasso della pecora e richiamano lo tzatziki (abbinamento ufficiale del menù); Alt: Hendrick's (10€)",
+    "🍹 Cocktail: Moscow Mule (10€) — lo zenzero pulisce il grasso della pecora ed è in sintonia col BBQ alla birra; Alt: Basil Smash (10€) — richiama la freschezza dello tzatziki",
+    "🍺 Birra: Divago — Dubbel (6,50€) — malto e dolcezza in eco diretta con la salsa BBQ alla birra usata in cottura; Alt: Roma IPA (6,50€)"
    ]},
 
-  {id:15,cat:"primi",nome:"Pappardelle al Ragù di Cinghiale",pr:"16€",desc:"Pappardelle all'uovo, ragù di cinghiale toscano, vino rosso",
+  {id:15,cat:"pinse",nome:"La Mortazza 2.0",pr:"14€",desc:"Schiacciata, mortadella, stracciatella, pistacchi e cipolle caramellate",
    vini:[
-    "🥇 Chianti CS Riserva \"Il Priore\" – Colombaio (36€) — Il Sangiovese toscano è il partner naturale del cinghiale",
-    "🔄 Chianti Classico – Riecine (35€) — Eleganza e finezza con il cinghiale",
-    "🍷 Chianti \"Campale\" (6€ al bicchiere) — Accessibile e del territorio"
+    "🥇 Lugana \"Capotesta\" – Cascina Maddalena (26€) — morbidezza e frutto bianco che avvolgono la mortadella senza coprirla",
+    "🔄 Chardonnay \"Schwarzhaus\" – Stroblhof (30€) — struttura e nota burrosa in sintonia con la stracciatella",
+    "🍷 Rosato \"Cremisi\" (6€ al bicchiere) — fresco e fruttato, alternativa più leggera"
    ],
    bev:[
-    "🍸 G&T: Monkey 47 ⭐ (14€) — Complessità botanical per il cinghiale; Alt: Piero Dry Gin (12€)",
-    "🍹 Cocktail: Issi Sour ⭐ (12€) — Cocktail del territorio con Chianti; Alt: Negroni (8€)",
-    "🍺 Birra: Nikulas Tripel ⭐ (6.5€) — La birra più gastronomica con la selvaggina"
+    "🍸 G&T: Nordes (10€) — morbido e fruttato, non copre la delicatezza della mortadella; Alt: J Rose (12€) — floreale, dialoga col pistacchio",
+    "🍹 Cocktail: Sprissi (9€) — bollicine amare, un classico coi salumi; Alt: Hugo Spritz (10€)",
+    "🍺 Birra: Sigeric Blonde (6,50€) — leggera e pulita; Alt: Strade Blanche (6,50€)"
    ]},
 
-  {id:16,cat:"primi",nome:"Gnocchi al Tartufo",pr:"18€",desc:"Gnocchi di patate, crema di parmigiano, tartufo nero",
+  {id:16,cat:"pinse",nome:"La Tartara",pr:"18€",desc:"Schiacciata con tartar, pomodorini freschi, stracciatella, pesto rosso e granella di nocciole",
    vini:[
-    "🥇 Chardonnay \"Schwarzhaus\" – Stroblhof (30€) — Struttura, vaniglia e frutto per il tartufo nero",
-    "🔄 Nebbiolo Langhe – Ettore Germano (26€) — Terroso e affine al tartufo",
-    "🍷 Vernaccia \"Albereta\" (46€) — La Vernaccia più strutturata per reggere il tartufo"
+    "🥇 Vernaccia \"Albereta\" – Colombaio (46€) — struttura e mineralità per accompagnare la carne cruda senza appesantire",
+    "🔄 Sauvignon \"Nico\" – Stroblhof (32€) — freschezza erbacea che pulisce la stracciatella e regge il pesto rosso",
+    "🍷 Spumante Brut \"Lumis\" (6€ al bicchiere) — le bollicine sono un classico con la carne cruda"
    ],
    bev:[
-    "🍸 G&T: Monkey 47 (14€) — Complessità per il tartufo; Alt: Frantuono (12€)",
-    "🍹 Cocktail: Sua Maestà il Martini (12€) — Eleganza neutrale che non compete con il tartufo; Alt: Negroni Fumé (12€)",
-    "🍺 Birra: Roma IPA (6.5€)"
+    "🍸 G&T: Barbarasa London Dry (10€) — secco e agrumato, pulisce il grasso della stracciatella; Alt: Tanqueray Ten (10€)",
+    "🍹 Cocktail: Paloma (10€) — agrumi e sale in sinergia con la carne cruda; Alt: Basil Smash (10€)",
+    "🍺 Birra: Roma IPA (6,50€) — l'amaro luppolato bilancia la dolcezza del pesto rosso; Alt: Strade Blanche (6,50€)"
    ]},
 
-  {id:17,cat:"primi",nome:"Pasta al Pomodoro e Basilico",pr:"10€",desc:"Pasta fresca, pomodoro San Marzano, basilico fresco",
+  {id:17,cat:"pinse",nome:"La Contadina",pr:"15€",desc:"Pomodoro, mozzarella, salsiccia, ricotta, melanzane condite alla mentuccia e mandorle",
    vini:[
-    "🥇 Vernaccia \"Selvabianca\" (6€ al bicchiere) — Il classico toscano con il pomodoro",
-    "🔄 Soave Classico – Pieropan (24€) — Floreale e acido, regge il pomodoro",
-    "🍷 Rosato \"Cremisi\" (6€ al bicchiere) — Fruttato e fresco"
+    "🥇 Chianti \"Campale\" – Colombaio (6€ al bicchiere) — abbinamento toscano diretto con la salsiccia",
+    "🔄 Ciliegiolo – Antonio Camillo (24€) — fruttato e leggero, non copre la mentuccia",
+    "🍷 Vernaccia \"Albereta\" (46€) — bianco strutturato per salsiccia e melanzane"
    ],
    bev:[
-    "🍸 G&T: Upperhand (10€) — Basilico e limone; Alt: Rame Italian Dry (10€)",
-    "🍹 Cocktail: Basil Smash (10€) — Il basilico è ingrediente condiviso; Alt: Sprissi (9€)",
-    "🍺 Birra: Sigeric Blonde (6.5€)"
+    "🍸 G&T: Maite Spiaggialunga (12€) — aromatico e mediterraneo, in sintonia con la mentuccia; Alt: Rame Italian Dry (10€)",
+    "🍹 Cocktail: Negroni (8€) — l'amaro con la salsiccia è un classico; Alt: Americano (8€)",
+    "🍺 Birra: Divago — Dubbel (6,50€) — malto e struttura per la salsiccia; Alt: Sigeric Blonde (6,50€)"
    ]},
 
-  {id:18,cat:"primi",nome:"Pasta Cacio e Pepe",pr:"12€",desc:"Pasta fresca, pecorino romano, pepe nero",
+  {id:18,cat:"pinse",nome:"La Figa & il Manzo",pr:"17€",desc:"Schiacciata con fichi semi-canditi, carpaccio di manzo, pecorino romano, salsa pomodorini gialli e rucola",
    vini:[
-    "🥇 Vernaccia \"Albereta\" (46€) — Struttura e mineralità per il pecorino romano stagionato",
-    "🔄 Sauvignon \"Nico\" – Stroblhof (32€) — Freschezza erbacea con il pepe nero",
-    "🍷 Chianti \"Campale\" (6€ al bicchiere) — Abbinamento del territorio"
+    "🥇 Gewurztraminer – Taschlerhof (32€) — la dolcezza aromatica sposa i fichi canditi e regge il pecorino romano",
+    "🔄 Vernaccia \"Albereta\" (46€) — struttura e mineralità per l'equilibrio dolce/salato/amaro",
+    "🍷 Pinot Nero – Panizzi (28€) — rosso leggero e fruttato, alternativa per chi vuole il rosso"
    ],
    bev:[
-    "🍸 G&T: Tanqueray Ten (10€) — Pulito e agrumato; Alt: Barbarasa London Dry (10€)",
-    "🍹 Cocktail: Paloma (10€) — Sale e agrumi con il cacio; Alt: Margarita (10€)",
-    "🍺 Birra: Roma IPA (6.5€) — L'amaro luppolato con il pepe"
+    "🍸 G&T: J Rose ⭐ (12€) — floreale e fruttato, profilo ideale per i fichi; Alt: Brockman's (10€) — frutti rossi",
+    "🍹 Cocktail: Hugo Spritz (10€) — il fiore di sambuco richiama la dolcezza dei fichi; Alt: Paloma (10€)",
+    "🍺 Birra: Nikulas Tripel (6,50€) — dolcezza maltata in sintonia coi fichi; Alt: Strade Blanche (6,50€)"
    ]},
 
-  {id:19,cat:"griglia",nome:"Tagliata di Scottona",pr:"24€",desc:"Tagliata di scottona toscana, rucola, parmigiano, pomodorini",
+  {id:19,cat:"pinse",nome:"La Scarpetta",pr:"14€",desc:"Mozzarella, ragù toscano, provola affumicata e pecorino romano",
    vini:[
-    "🥇 Bolgheri Rosso – Le Macchiole (38€) — Potenza e struttura per la carne alla griglia",
-    "🔄 Chianti Classico – Riecine (35€) — Eleganza toscana con la tagliata",
-    "🍷 Nebbiolo Langhe – Germano (26€) — Tannini e acidità che puliscono la grassezza"
+    "🥇 Chianti Classico – Riecine (35€) — Sangiovese puro, il partner naturale del ragù toscano",
+    "🔄 Chianti \"Campale\" (6€ al bicchiere) — accessibile e territoriale",
+    "🍷 Ciliegiolo – Antonio Camillo (24€) — fruttato, regge la provola affumicata"
    ],
    bev:[
-    "🍸 G&T: Monkey 47 ⭐ (14€) — Il più complesso per la carne nobile; Alt: Piero Dry Gin (12€)",
-    "🍹 Cocktail: Issi Sour ⭐ (12€) — Cocktail del territorio; Alt: Whisky Sour (10€)",
-    "🍺 Birra: Nikulas Tripel (6.5€)"
+    "🍸 G&T: Maite Fiamma (12€) — richiama l'affumicatura della provola; Alt: Monkey 47 (14€)",
+    "🍹 Cocktail: Issi Sour ⭐ (12€) — legame diretto col territorio del ragù toscano; Alt: Negroni (8€)",
+    "🍺 Birra: Divago — Dubbel (6,50€) — malto e struttura per il ragù; Alt: Nikulas Tripel (6,50€)"
    ]},
 
-  {id:20,cat:"griglia",nome:"Arrosticini di Pecora",pr:"18€",desc:"Arrosticini di pecora abruzzesi, pane casereccio",
+  {id:20,cat:"pinse",nome:"La 4 Formaggi Pro",pr:"15€",desc:"Mozzarella, gorgonzola, pecorino fresco, pecorino romano, ricotta e cipolle caramellate",
    vini:[
-    "🥇 Etna Rosso – Tenuta delle Terre Nere (45€) — Mineralità vulcanica e tannini eleganti con la pecora",
-    "🔄 Chianti CS Riserva \"Il Priore\" – Colombaio (36€) — Sangiovese strutturato per la selvaggina",
-    "🍷 Chianti \"Campale\" (6€ al bicchiere) — Semplice e del territorio"
+    "🥇 Gewurztraminer – Taschlerhof (32€) — l'abbinamento d'elezione col gorgonzola, dolcezza aromatica che bilancia la piccantezza",
+    "🔄 Crémant d'Alsace Millesimé – Dirler-Cadé (40€) — morbidezza e spezie dolci in sinergia col gorgonzola",
+    "🍷 Vernaccia \"Albereta\" (46€) — struttura e mineralità per la complessità dei quattro formaggi"
    ],
    bev:[
-    "🍸 G&T: Rame London Dry (10€) — Speziato e pepato; Alt: Monkey 47 (14€)",
-    "🍹 Cocktail: Moscow Mule (10€) — Zenzero con la carne di pecora; Alt: Issi Sour (12€)",
-    "🍺 Birra: Divago Amber ⭐ (6.5€)"
+    "🍸 G&T: Monkey 47 ⭐ (14€) — regge quattro formaggi e cipolla caramellata; Alt: Piero Dry Gin (12€)",
+    "🍹 Cocktail: Negroni Fumé ⭐ (12€) — il mezcal affumicato crea sinergia col gorgonzola; Alt: Negroni classico (8€)",
+    "🍺 Birra: Nikulas Tripel (6,50€) — la più gastronomica, ideale sui formaggi erborinati; Alt: Divago — Dubbel (6,50€)"
    ]},
 
-  {id:21,cat:"griglia",nome:"Pollo alla Griglia",pr:"16€",desc:"Pollo ruspante alla griglia, erbe aromatiche, limone",
+  {id:21,cat:"pinse",nome:"La Fresca di Zona",pr:"13€",desc:"Pomodoro, mozzarella, pomodorini, pesto di basilico, stracciatella, rucola e pecorino romano",
    vini:[
-    "🥇 Vernaccia \"Selvabianca\" (6€ al bicchiere) — Freschezza e mineralità con il pollo alle erbe",
-    "🔄 Sauvignon \"Nico\" – Stroblhof (32€) — Erbaceo e agrumato con le erbe aromatiche",
-    "🍷 Rosato \"Cremisi\" (6€ al bicchiere) — Fruttato e fresco"
+    "🥇 Vernaccia \"Selvabianca\" ⭐ (6€ al bicchiere) — abbinamento del territorio con basilico e stracciatella",
+    "🔄 Vermentino – Lambruschi (26€) — erbe mediterranee e sapidità con il pesto",
+    "🍷 Soave Classico – Pieropan (24€) — floreale e delicato"
    ],
    bev:[
-    "🍸 G&T: Tanqueray Ten (10€) — Pulito e agrumato; Alt: Barbarasa London Dry (10€)",
-    "🍹 Cocktail: Paloma (10€) — Agrumi e sale; Alt: Basil Smash (10€)",
-    "🍺 Birra: Sigeric Blonde (6.5€)"
+    "🍸 G&T: Upperhand ⭐ (10€) — basilico e limone in affinità diretta; Alt: Tanqueray Ten (10€)",
+    "🍹 Cocktail: Basil Smash (10€) — ingrediente condiviso col piatto; Alt: Sprissi (9€)",
+    "🍺 Birra: Strade Blanche (6,50€) — agrumata e floreale; Alt: Sigeric Blonde (6,50€)"
    ]},
 
-  {id:22,cat:"griglia",nome:"Costata alla Brace",pr:"28€",desc:"Costata di Chianina, sale grosso, rosmarino",
+  {id:22,cat:"pinse",nome:"La Stracciamare",pr:"14€",desc:"Schiacciata con stracciatella, alici sotto pesto, pomodorini e basilico",
    vini:[
-    "🥇 Bolgheri Rosso – Le Macchiole (38€) — La Chianina richiede un rosso di grande struttura",
-    "🔄 Chianti CL Riserva \"Vigna Barbischio\" – Alongi (48€) — Eleganza e complessità per la carne nobile",
-    "🍷 Chianti Classico – Riecine (35€) — Sangiovese puro di grande qualità"
+    "🥇 Vermentino – Lambruschi (26€) — sapidità e note iodate in sinergia con le alici",
+    "🔄 Etna Bianco – Benanti (33€) — mineralità vulcanica e nota salmastra",
+    "🍷 Vernaccia \"Selvabianca\" (6€ al bicchiere) — la nota ammandorlata è classica con le alici"
    ],
    bev:[
-    "🍸 G&T: Monkey 47 ⭐ (14€) — Premium per la carne premium; Alt: Frantuono (12€)",
-    "🍹 Cocktail: Issi Sour (12€) o Negroni Fumé (12€)",
-    "🍺 Birra: Nikulas Tripel ⭐ (6.5€)"
+    "🍸 G&T: Poseidon (12€) — marino, fresco, agrumato; Alt: Barbarasa Navy (12€)",
+    "🍹 Cocktail: Basil Smash ✅ (10€) — il basilico fresco in perfetta sinergia con le alici sotto pesto (abbinamento ufficiale del menù)",
+    "🍺 Birra: Strade Blanche (6,50€) — floreale e agrumata, non copre le alici; Alt: Sigeric Blonde (6,50€)"
    ]},
 
-  {id:23,cat:"griglia",nome:"Grigliata Mista",pr:"32€",desc:"Selezione di carni dalla griglia: salsiccia, costina, pollo, arrosticini",
+  {id:23,cat:"pinse",nome:"La Pacco da Giù",pr:"15€",desc:"Pomodoro, mozzarella, nduja, peperone crusco e provola affumicata",
    vini:[
-    "🥇 Chianti CS Riserva \"Il Priore\" – Colombaio (36€) — La riserva del territorio per la grigliata mista",
-    "🔄 Etna Rosso – Tenuta delle Terre Nere (45€) — Mineralità vulcanica e acidità per pulire la grassezza",
-    "🍷 Chianti \"Campale\" (6€ al bicchiere) — Accessibile e versatile"
+    "🥇 Etna Rosso – Tenuta delle Terre Nere (45€) — bilancia il piccante della nduja senza schiacciarlo",
+    "🔄 Gewurztraminer – Taschlerhof (32€) — la dolcezza aromatica mitiga il piccante",
+    "🍷 Ciliegiolo – Antonio Camillo (24€) — freschezza e frutto per spegnere la nduja"
    ],
    bev:[
-    "🍸 G&T: Rame London Dry (10€) — Speziato; Alt: Monkey 47 (14€)",
-    "🍹 Cocktail: Issi Sour ⭐ (12€) — Il cocktail del territorio; Alt: Negroni (8€)",
-    "🍺 Birra: Divago Amber ⭐ (6.5€) — Malto e struttura per le carni alla griglia"
+    "🍸 G&T: Barbarasa Navy (12€) — secco, deciso, molto agrumato, regge il piccante; Alt: Rame London Dry (10€)",
+    "🍹 Cocktail: Spicy Paloma ✅ (12€) — piccante contro piccante, sinergia diretta con la nduja (abbinamento ufficiale del menù)",
+    "🍺 Birra: Roma IPA (6,50€) — l'amaro luppolato dialoga col piccante; Alt: Divago — Dubbel (6,50€)"
    ]},
 
-  {id:24,cat:"griglia",nome:"Salsiccia alla Griglia",pr:"14€",desc:"Salsiccia di maiale toscana, fagioli cannellini, salvia",
+  {id:24,cat:"burger",nome:"Polpo Burger",pr:"20€",desc:"Polpo piastrato, spinacino fresco, mayo al gin e pepe rosa, carpaccio di cavolo verza (soia e limone)",
    vini:[
-    "🥇 Chianti \"Campale\" – Colombaio (6€ al bicchiere) — Abbinamento toscano classico",
-    "🔄 Ciliegiolo – Antonio Camillo (24€) — Fruttato e fresco con la salsiccia",
-    "🍷 Rosato \"Cremisi\" (6€ al bicchiere) — Leggero e versatile"
+    "🥇 Vermentino – Lambruschi (26€) — sapidità marina e note iodate col polpo",
+    "🔄 Etna Bianco – Benanti (33€) — mineralità vulcanica e salmastro",
+    "🍷 Spumante Brut \"Lumis\" (6€ al bicchiere) — bollicine che accompagnano il polpo"
    ],
    bev:[
-    "🍸 G&T: Maite Spiaggialunga (12€) — Aromatico; Alt: Rame Italian Dry (10€)",
-    "🍹 Cocktail: Negroni (8€) — L'amaro con la salsiccia; Alt: Americano (8€)",
-    "🍺 Birra: Divago Amber (6.5€)"
+    "🍸 G&T: Poseidon ✅ (12€) — marino, fresco, agrumato: il profilo perfetto per il polpo (abbinamento ufficiale del menù); Alt: Barbarasa Navy (12€)",
+    "🍹 Cocktail: Paloma (10€) — agrumi e sale in sintonia col polpo; Alt: Margarita (10€)",
+    "🍺 Birra: Strade Blanche (6,50€) — agrumi e leggerezza; Alt: Corona (4€)"
    ]},
 
-  {id:25,cat:"griglia",nome:"Battuta al Coltello",pr:"18€",desc:"Battuta di manzo, tuorlo d'uovo, capperi, senape, cipolla",
+  {id:25,cat:"burger",nome:"Issi Burger",pr:"17€",desc:"180g di hamburger di scottona, provola affumicata, cipolla caramellata, rigatino croccante, salsa BBQ alla birra, insalatina croccante",
    vini:[
-    "🥇 Sauvignon \"Nico\" – Stroblhof (32€) — Freschezza erbacea con la senape e i capperi",
-    "🔄 Vernaccia \"Selvabianca\" (6€ al bicchiere) — La nota amaricante con i capperi",
-    "🍷 Lumis Brut (6€ al bicchiere) — Bollicine con la carne cruda"
+    "🥇 Bolgheri Rosso – Le Macchiole (38€) — potenza e frutta nera per un burger ricco",
+    "🔄 Chianti Classico – Riecine (35€) — eleganza toscana col manzo",
+    "🍷 Nebbiolo Langhe – Ettore Germano (26€) — tannini e acidità che puliscono grassezza e BBQ"
    ],
    bev:[
-    "🍸 G&T: Barbarasa London Dry (10€) — Secco, aromatico, agrumato; Alt: Tanqueray Ten (10€)",
-    "🍹 Cocktail: Paloma (10€) — Agrumi e sale per la carne cruda; Alt: Basil Smash (10€)",
-    "🍺 Birra: Roma IPA (6.5€)"
+    "🍸 G&T: Rame London Dry (10€) — speziato e pepato; Alt: Monkey 47 (14€)",
+    "🍹 Cocktail: Issi Sour ⭐ (12€) — cocktail di casa con pairing identitario; Alt: Whisky Sour (10€)",
+    "🍺 Birra: Divago — Dubbel ⭐ (6,50€) — malto in eco diretta con la salsa BBQ alla birra; Alt: Nikulas Tripel (6,50€)"
    ]},
 
-  {id:26,cat:"pinse",nome:"La Contadina",pr:"15€",desc:"Pomodoro, mozzarella, salsiccia, ricotta, melanzane alla mentuccia, mandorle",
+  {id:26,cat:"burger",nome:"Chicken Burger",pr:"15€",desc:"Pollo croccante alla paprika e pepe rosa, zabaione al gin e agrumi, cavolo viola e pomodorini",
    vini:[
-    "🥇 Chianti \"Campale\" – Colombaio (6€ al bicchiere) — Abbinamento toscano diretto con la salsiccia",
-    "🔄 Ciliegiolo – Antonio Camillo (24€) — Leggero e fruttato",
-    "🍷 Vernaccia \"Albereta\" (46€) — Bianco strutturato con salsiccia e melanzane"
+    "🥇 Sauvignon \"Nico\" – Stroblhof (32€) — freschezza agrumata in sinergia con lo zabaione",
+    "🔄 Kerner – Taschlerhof (28€) — aromaticità fresca e fruttata",
+    "🍷 Spumante Brut \"Lumis\" Rosé (26€) — fruttato e fresco col pollo croccante"
    ],
    bev:[
-    "🍸 G&T: Maite Spiaggialunga (12€) — Aromatico e mediterraneo; Alt: Rame Italian Dry (10€)",
-    "🍹 Cocktail: Negroni (8€) — L'amaro con la salsiccia; Alt: Americano (8€)",
-    "🍺 Birra: Divago Amber (6.5€)"
+    "🍸 G&T: Arigatuono ✅ (12€) — stile giapponese elegante e agrumato: dialoga con lo zabaione gin e agrumi (abbinamento ufficiale del menù); Alt: Brockman's (10€)",
+    "🍹 Cocktail: Paloma (10€) — agrumi e sale col pollo fritto; Alt: Margarita (10€)",
+    "🍺 Birra: Sigeric Blonde (6,50€) — leggera, lascia spazio alle spezie; Alt: Strade Blanche (6,50€)"
    ]},
 
-  {id:27,cat:"pinse",nome:"La Figa e il Manzo",pr:"17€",desc:"Schiacciata con fichi semi-canditi, carpaccio di manzo, pecorino romano, salsa pomodorini gialli, rucola",
+  {id:27,cat:"burger",nome:"Veggie Burger",pr:"15€",desc:"Pulled pork vegetariano BBQ con salsa di carote e zenzero, cavolo viola marinato, pomodori secchi e cipolla caramellata",
    vini:[
-    "🥇 Gewurztraminer – Taschlerhof (32€) — Dolcezza aromatica con fichi e pecorino",
-    "🔄 Vernaccia \"Albereta\" (46€) — Struttura e mineralità per l'equilibrio dolce/amaro/salato",
-    "🍷 Pinot Nero – Panizzi (28€) — Rosso leggero e fruttato"
+    "🥇 Gewurztraminer – Taschlerhof (32€) — lo zenzero e le spezie dolci trovano specchio nell'aromaticità del vitigno",
+    "🔄 Pinot Nero – Panizzi (28€) — rosso leggero e non invasivo",
+    "🍷 Rosato \"Cremisi\" (6€ al bicchiere) — fruttato e fresco"
    ],
    bev:[
-    "🍸 G&T: J Rose ⭐ (12€) — Profilo ideale per i fichi; Alt principale: Brockman's (10€); Alt: Nordes (10€)",
-    "🍹 Cocktail: Hugo Spritz (10€) — Elderflower e fichi; Alt: Paloma (10€)",
-    "🍺 Birra: Nikulas Tripel (6.5€)"
+    "🍸 G&T: Hendrick's (10€) — floreale, in equilibrio col cavolo viola; Alt: Nordes (10€)",
+    "🍹 Cocktail: Moscow Mule ⭐ (10€) — lo zenzero è condiviso tra piatto e cocktail, massima sinergia; Alt: Jungle Bird (12€)",
+    "🍺 Birra: Roma IPA (6,50€) — l'amaro luppolato col BBQ vegetariano; Alt: Divago — Dubbel (6,50€)"
    ]},
 
-  {id:28,cat:"pinse",nome:"La Scarpetta",pr:"14€",desc:"Mozzarella, ragù toscano, provola affumicata, pecorino romano",
+  {id:28,cat:"burger",nome:"Tartar Burger",pr:"18€",desc:"150g di battuta di manzo, salsa tzatziki, cipolla caramellata, lattughino croccante e pomodori secchi",
    vini:[
-    "🥇 Chianti Classico – Riecine (35€) — Sangiovese puro con ragù toscano",
-    "🔄 Chianti \"Campale\" (6€ al bicchiere) — Accessibile e territoriale",
-    "🍷 Ciliegiolo – Antonio Camillo (24€) — Fruttato, regge la provola affumicata"
+    "🥇 Vernaccia \"Albereta\" (46€) — struttura e mineralità per la carne cruda",
+    "🔄 Rosato \"Cremisi\" (6€ al bicchiere) — freschezza e frutto con cipolla caramellata e pomodori secchi",
+    "🍷 Chianti \"Campale\" (6€ al bicchiere) — rosso leggero del territorio"
    ],
    bev:[
-    "🍸 G&T: Maite Fiamma (12€) — Richiama la provola; Alt: Monkey 47 (14€)",
-    "🍹 Cocktail: Issi Sour ⭐ (12€) — Abbinamento narrativo del territorio; Alt: Negroni (8€)",
-    "🍺 Birra: Divago Amber (6.5€)"
+    "🍸 G&T: Tanqueray Ten (10€) — pulito e agrumato; Alt: Barbarasa London Dry (10€)",
+    "🍹 Cocktail: Paloma (10€) — agrumi e sale con la carne cruda; Alt: Margarita (10€)",
+    "🍺 Birra: Sigeric Blonde (6,50€) — leggera e pulita; Alt: Strade Blanche (6,50€) — richiama la freschezza dello tzatziki"
    ]},
 
-  {id:29,cat:"pinse",nome:"La 4 Formaggi Pro",pr:"15€",desc:"Mozzarella, gorgonzola, pecorino fresco, pecorino romano, ricotta, cipolle caramellate",
+  {id:29,cat:"dolci",nome:"Tiramisù del Poggio",pr:"6€",desc:"Il nostro tiramisù della casa",
    vini:[
-    "🥇 Gewurztraminer – Taschlerhof (32€) — Abbinamento d'elezione con il gorgonzola",
-    "🔄 Chianti CL Riserva \"Vigna Barbischio\" – Alongi (48€) — Per chi preferisce il rosso",
-    "🔄 BIS Crémant d'Alsace Millesimé – Dirler-Cadé (40€) — Morbidezza e spezie dolci magnifiche con il gorgonzola",
-    "🍷 Vernaccia \"Albereta\" (46€) — Struttura e mineralità per la complessità dei formaggi"
+    "🥇 Moscato d'Asti \"Camp Blanc\" – Emidio Vada (26€) — dolcezza acida e bollicina soffice con mascarpone e caffè",
+    "🔄 Passito di Pantelleria \"Ben Ryé\" – Donnafugata (65€) — versione gourmet più intensa",
+    "🍷 Spumante Brut \"Lumis\" Rosé (26€) — per chi preferisce restare più secco, le bollicine puliscono il mascarpone"
    ],
    bev:[
-    "🍸 G&T: Monkey 47 ⭐ (14€) — Regge quattro formaggi e cipolla caramellata; Alt: Piero Dry Gin (12€)",
-    "🍹 Cocktail: Negroni Fumé ⭐ (12€) — Mezcal affumicato con il gorgonzola; Alt: Negroni classico (8€)",
-    "🍺 Birra: Nikulas Tripel ⭐ (6.5€)"
+    "🍸 G&T: Monkey 47 (14€) — le note speziate e di agrumi canditi dialogano col caffè; Alt: J Rose (12€)",
+    "🍹 Cocktail: Espresso Mentini ⭐ (12€) — caffè e menta in affinità totale; Alt: Paper Plane (12€)",
+    "🍺 Birra: Nikulas Tripel (6,50€) — dolcezza maltata e frutta scura in eco col cacao; Alt: Divago — Dubbel (6,50€)"
    ]},
 
-  {id:30,cat:"pinse",nome:"La Fresca di Zona",pr:"13€",desc:"Pomodoro, mozzarella, pesto di basilico, stracciatella, rucola, pecorino romano",
+  {id:30,cat:"dolci",nome:"Tortino Pere e Cannella",pr:"6€",desc:"Dessert alla pera speziata con salsa al caramello salato",
    vini:[
-    "🥇 Vernaccia \"Selvabianca\" ⭐ (6€ al bicchiere) — Abbinamento del territorio con basilico e stracciatella",
-    "🔄 Vermentino – Lambruschi (26€) — Erbe mediterranee e sapidità con il pesto",
-    "🍷 Soave Classico – Pieropan (24€) — Floreale e delicato"
+    "🥇 Moscato d'Asti \"Camp Blanc\" – Emidio Vada (26€) — pera, cannella e caramello trovano equilibrio nella sua freschezza aromatica",
+    "🔄 Passito di Pantelleria \"Ben Ryé\" (65€) — sinergia raffinata con la pera speziata",
+    "🍷 Gewurztraminer – Taschlerhof (32€) — le spezie del vitigno rispondono direttamente alla cannella"
    ],
    bev:[
-    "🍸 G&T: Upperhand ⭐ (10€) — Basilico e limone; Alt: Tanqueray Ten (10€)",
-    "🍹 Cocktail: Basil Smash (10€) — Ingrediente condiviso; Alt: Sprissi (9€)",
-    "🍺 Birra: Strade Blanche (6.5€)"
+    "🍸 G&T: Maite Spiaggialunga (12€) — le note speziate mediterranee accompagnano la cannella; Alt: Piero Dry Gin (12€)",
+    "🍹 Cocktail: Paper Plane ⭐ (12€) — bourbon, amaro e agrume in sintonia col caramello salato; Alt: Moscow Mule (10€)",
+    "🍺 Birra: Divago — Dubbel (6,50€) — malto scuro e caramellato in eco diretta col dessert; Alt: Nikulas Tripel (6,50€)"
    ]},
 
-  {id:31,cat:"pinse",nome:"La Stracciamare",pr:"14€",desc:"Schiacciata con stracciatella, alici sotto pesto, pomodorini, basilico",
+  {id:31,cat:"dolci",nome:"Latte in Piedi",pr:"6€",desc:"Tradizionale budino di crema alla vaniglia con salsa crème caramel",
    vini:[
-    "🥇 Vermentino – Lambruschi (26€) — Sapidità e note iodate in perfetta sinergia con le alici",
-    "🔄 Etna Bianco – Benanti (33€) — Mineralità vulcanica e salmastro",
-    "🍷 Vernaccia \"Selvabianca\" (6€ al bicchiere) — La nota amaricante è classica con le alici"
+    "🥇 Moscato d'Asti \"Camp Blanc\" – Emidio Vada (26€) — floreale delicato e dolcezza leggera con la vaniglia",
+    "🔄 Passito di Pantelleria \"Ben Ryé\" (65€) — miele e note balsamiche con la crema",
+    "🍷 Spumante Brut \"Lumis\" (6€ al bicchiere) — bollicine leggere per chiudere senza appesantire"
    ],
    bev:[
-    "🍸 G&T: Poseidon ⭐ (12€) — Marino, fresco, agrumato; Alt: Barbarasa Navy (12€)",
-    "🍹 Cocktail: Basil Smash (10€) ✅ — Il basilico fresco con le alici sotto pesto",
-    "🍺 Birra: Strade Blanche (6.5€)"
+    "🍸 G&T: J Rose (12€) — floreale e delicato, non copre la vaniglia; Alt: Nordes (10€)",
+    "🍹 Cocktail: Espresso Mentini (12€) — la menta fresca contrasta la dolcezza della crema; Alt: Sua Maestà il Martini (12€)",
+    "🍺 Birra: Sigeric Blonde (6,50€) — leggera, chiude il pasto senza appesantire; Alt: Strade Blanche (6,50€)"
    ]},
 
-  {id:32,cat:"pinse",nome:"La Pacco da Giù",pr:"15€",desc:"Pomodoro, mozzarella, nduja, peperone crusco, provola affumicata",
+  {id:32,cat:"dolci",nome:"Cremoso al Mango",pr:"6€",desc:"Cremoso al mango con croccante alle mandorle",
    vini:[
-    "🥇 Etna Rosso – Tenuta delle Terre Nere (45€) — Bilancia la piccantezza della nduja senza schiacciarla",
-    "🔄 Gewurztraminer – Taschlerhof (32€) — La dolcezza aromatica mitiga il piccante",
-    "🍷 Ciliegiolo – Antonio Camillo (24€) — Freschezza e frutto per spegnere la nduja"
+    "🥇 Passito di Pantelleria \"Ben Ryé\" – Donnafugata (65€) ⭐ — affinità quasi totale con mango e mandorle",
+    "🔄 Moscato d'Asti \"Camp Blanc\" (26€) — più leggero e accessibile",
+    "🍷 Gewurztraminer – Taschlerhof (32€) — litchi e frutta tropicale in sinergia diretta"
    ],
    bev:[
-    "🍸 G&T: Barbarasa Navy ⭐ (12€) — Secco, deciso, molto agrumato; Alt: Rame London Dry (10€)",
-    "🍹 Cocktail: Spicy Paloma ✅ (12€) — Piccante contro piccante",
-    "🍺 Birra: Roma IPA ⭐ (6.5€)"
-   ]},
-
-  {id:33,cat:"burger",nome:"Polpo Burger",pr:"20€",desc:"Polpo piastrato, spinacino fresco, mayo al gin e pepe rosa, carpaccio di cavolo verza",
-   vini:[
-    "🥇 Vermentino – Lambruschi (26€) — Sapidità marina e note iodate con il polpo",
-    "🔄 Etna Bianco – Benanti (33€) — Mineralità vulcanica e salmastro",
-    "🍷 Lumis Brut (6€ al bicchiere) — Bollicine con il polpo"
-   ],
-   bev:[
-    "🍸 G&T: Poseidon ✅ (12€) — Marino, fresco, agrumato",
-    "🍹 Cocktail: Paloma (10€) — Agrumi e sale con il polpo; Alt: Margarita (10€)",
-    "🍺 Birra: Strade Blanche (6.5€) — Agrumi e leggerezza"
-   ]},
-
-  {id:34,cat:"burger",nome:"Issi Burger",pr:"17€",desc:"180g scottona, provola affumicata, cipolla caramellata, rigatino croccante, salsa BBQ alla birra, insalatina croccante",
-   vini:[
-    "🥇 Bolgheri Rosso – Le Macchiole (38€) — Potenza e frutta nera per un burger ricco",
-    "🔄 Chianti Classico – Riecine (35€) — Eleganza toscana con il manzo",
-    "🍷 Nebbiolo Langhe – Germano (26€) — Tannini e acidità puliscono grassezza e BBQ"
-   ],
-   bev:[
-    "🍸 G&T: Rame London Dry (10€) — Speziato e pepato; Alt: Monkey 47 (14€)",
-    "🍹 Cocktail: Issi Sour ⭐ (12€) — Cocktail di casa con pairing identitario; Alt: Whisky Sour (10€)",
-    "🍺 Birra: Divago Amber ⭐ (6.5€)"
-   ]},
-
-  {id:35,cat:"burger",nome:"Chicken Burger",pr:"15€",desc:"Pollo croccante alla paprika e pepe rosa, zabaione al gin e agrumi, cavolo viola, pomodorini",
-   vini:[
-    "🥇 Sauvignon \"Nico\" – Stroblhof (32€) — Freschezza agrumata in sinergia con lo zabaione",
-    "🔄 Kerner – Taschlerhof (28€) (IN ARRIVO) — Aromaticità fresca e fruttata",
-    "🍷 Lumis Rosé – Colombaio (26€) — Fruttato e fresco con il pollo croccante"
-   ],
-   bev:[
-    "🍸 G&T: Arigatuono ✅ (12€) — Stile giapponese, elegante, agrumato; Alt: Brockman's (10€)",
-    "🍹 Cocktail: Paloma (10€) — Agrumi e sale con il pollo fritto; Alt: Margarita (10€)",
-    "🍺 Birra: Sigeric Blonde (6.5€)"
-   ]},
-
-  {id:36,cat:"burger",nome:"Veggie Burger",pr:"15€",desc:"Pulled pork vegetariano BBQ, salsa di carote e zenzero, cavolo viola marinato, pomodori secchi, cipolla caramellata",
-   vini:[
-    "🥇 Gewurztraminer – Taschlerhof (32€) — Zenzero e spezie dolci trovano specchio nell'aromaticità",
-    "🔄 Pinot Nero – Panizzi (28€) — Rosso leggero e non invasivo",
-    "🍷 Rosato \"Cremisi\" (6€ al bicchiere) — Fruttato e fresco"
-   ],
-   bev:[
-    "🍸 G&T: Hendrick's (10€) — Floreale con il cavolo viola; Alt: Nordes (10€)",
-    "🍹 Cocktail: Moscow Mule ⭐ (10€) — Zenzero condiviso tra piatto e cocktail; Alt: Jungle Bird (12€)",
-    "🍺 Birra: Roma IPA (6.5€) — L'amaro luppolato con il BBQ vegetariano"
-   ]},
-
-  {id:37,cat:"burger",nome:"Tartar Burger",pr:"18€",desc:"150g battuta di manzo, salsa tzatziki, cipolla caramellata, lattughino croccante, pomodori secchi",
-   vini:[
-    "🥇 Vernaccia \"Albereta\" (46€) — Struttura e mineralità per la carne cruda",
-    "🔄 Rosato \"Cremisi\" (6€ al bicchiere) — Freschezza e frutto con cipolla caramellata e pomodori secchi",
-    "🍷 Chianti \"Campale\" (6€ al bicchiere) — Rosso leggero del territorio"
-   ],
-   bev:[
-    "🍸 G&T: Tanqueray Ten (10€) — Pulito e agrumato; Alt: Barbarasa London Dry (10€)",
-    "🍹 Cocktail: Paloma (10€) — Agrumi e sale con la carne cruda; Alt: Margarita (10€)",
-    "🍺 Birra: Sigeric Blonde (6.5€) o Strade Blanche (6.5€)"
-   ]},
-
-  {id:38,cat:"dolci",nome:"Tiramisù del Poggio",pr:"6€",desc:"Tiramisù della casa",
-   vini:[
-    "🥇 Moscato d'Asti \"Camp Blanc\" – Emidio Vada (26€) — Dolcezza acida e bollicina soffice con mascarpone e caffè",
-    "🔄 Passito di Pantelleria \"Ben Ryé\" – Donnafugata (65€) — Versione gourmet intensa",
-    "🍷 Grappa di Vernaccia \"Il Colombaio\" (5€) — Chiusura territoriale"
-   ],
-   bev:[
-    "🍹 Cocktail: Espresso Mentini ⭐ (12€) — Caffè e menta in affinità totale; Alt: Paper Plane (12€)",
-    "🍺 Digestivo: Amaro Jefferson (5€) o Montenegro (4€)"
-   ]},
-
-  {id:39,cat:"dolci",nome:"Tortino Pere e Cannella con Salsa al Caramello Salato",pr:"6€",desc:"Dessert alla pera speziata e caramello salato",
-   vini:[
-    "🥇 Moscato d'Asti \"Camp Blanc\" – Emidio Vada (26€) — Pera, cannella e caramello trovano equilibrio nella sua freschezza",
-    "🔄 Passito di Pantelleria \"Ben Ryé\" (65€) — Sinergia raffinata con pera speziata",
-    "🍷 Grappa Riserva \"Il Colombaio\" (7€) — Digestivo d'autore"
-   ],
-   bev:[
-    "🍹 Cocktail: Paper Plane ⭐ (12€) — Bourbon, amaro e agrume con caramello salato; Alt: Moscow Mule (10€)",
-    "🍺 Digestivo: Amaretto di Saronno (4€)"
-   ]},
-
-  {id:40,cat:"dolci",nome:"Latte in Piedi",pr:"6€",desc:"Tradizionale budino cremoso alla vaniglia",
-   vini:[
-    "🥇 Moscato d'Asti \"Camp Blanc\" – Emidio Vada (26€) — Floreale delicato e dolcezza leggera con la vaniglia",
-    "🔄 Passito di Pantelleria \"Ben Ryé\" (65€) — Miele e note balsamiche con la crema",
-    "🍷 Grappa di Vernaccia \"Il Colombaio\" (5€) — Digestivo leggero a fine pasto"
-   ],
-   bev:[
-    "🍹 Cocktail: Espresso Mentini (12€) — Menta fresca e vaniglia; Alt: Sua Maestà il Martini (12€)",
-    "🍺 Digestivo: Baileys (4€) — Crema e vaniglia; Alt: Love Kam. liquore al caramello salato (4€)"
-   ]},
-
-  {id:41,cat:"dolci",nome:"Cremoso al Mango e Croccante alle Mandorle",pr:"6€",desc:"Dessert tropicale con mango e croccante alle mandorle",
-   vini:[
-    "🥇 Passito di Pantelleria \"Ben Ryé\" – Donnafugata (65€) ⭐ — Affinità quasi totale con mango e mandorle",
-    "🔄 Moscato d'Asti \"Camp Blanc\" (26€) — Più leggero e accessibile",
-    "🍷 Reguta Traminer Aromatico (24€ / 6€ al bicchiere, giacenza) — Litchi e mango in sinergia diretta"
-   ],
-   bev:[
-    "🍹 Cocktail: Jungle Bird ⭐ (12€) — Profilo tropicale diretto; Alt: Tropical Daiquiri Frozen (10€)",
-    "🍺 Digestivo: Don Papa Rum (10€)"
+    "🍸 G&T: Nordes (10€) — morbido e fruttato, richiama il mango; Alt: Hendrick's (10€)",
+    "🍹 Cocktail: Jungle Bird ⭐ (12€) — profilo tropicale diretto con ananas e rum; Alt: Tropical Daiquiri Frozen (10€)",
+    "🍺 Birra: Nikulas Tripel (6,50€) — note fruttate e speziate in accompagnamento al mango; Alt: Divago — Dubbel (6,50€)"
    ]}
+
 ];
 
 var NOTES = [
-  "Issi Sour è il cocktail premium più versatile con i piatti di carne toscani — contiene Chianti di San Gimignano e va valorizzato come cocktail del territorio.",
-  "Roma IPA è la birra più tecnica per piatti piccanti, fritture e formaggi forti — l'amaro luppolato bilancia grassezza e piccante.",
-  "Nikulas Tripel è la birra più gastronomica della selezione — da spingere su 4 formaggi, cinghiale, carni nobili e burger strutturati.",
-  "Moscow Mule funziona molto bene su piatti con zenzero come ingrediente, per esempio veggie burger e arrosticini con tzatziki.",
-  "Monkey 47 è il G&T premium da proporre sui piatti più complessi come tartufo, cinghiale, 4 formaggi e tagliate.",
-  "Rosato Zingarelli funziona bene come proposta per aperitivo, pinse fresche e insalatone — da spingere attivamente al bicchiere ogni sera."
+  "Issi Sour è il cocktail premium più versatile con i piatti di carne toscani (Tagliata R&G, Tagliata del Poggio, Picanha, Scarpetta, Issi Burger) — contiene Chianti di San Gimignano e va valorizzato come cocktail del territorio.",
+  "Roma IPA è la birra più tecnica per piatti piccanti, fritture e formaggi forti — l'amaro luppolato bilancia grassezza e piccante (Frittino del Poggio, La Pacco da Giù, Battuta, Veggie Burger).",
+  "Nikulas Tripel è la birra più gastronomica della selezione — da spingere su 4 Formaggi Pro, Picanha, Tagliata del Poggio e dolci con frutta/mandorle.",
+  "Monkey 47 è il G&T premium da proporre sui piatti più complessi e grassi: tartufo, Tagliata del Poggio (lardo), Picanha, 4 Formaggi Pro.",
+  "Gli abbinamenti con ✅ sono quelli già stampati nel menù stesso (pairing-box \"Abbinamenti consigliati dal Gingegnere\") — vanno mantenuti identici tra menu.html e questa scheda per coerenza col cliente.",
+  "Sui 3 piatti con mayo/zabaione al gin (Carpaccio, Frittino, Chicken Burger) il G&T resta la scelta guidata: il gin è già nel piatto, quindi il servizio deve sempre proporlo per primo in sala.",
+  "Moscow Mule funziona molto bene sui piatti con zenzero come ingrediente diretto — Veggie Burger (salsa carote e zenzero) e Arrosticini (in alternativa allo Upperhand ufficiale).",
+  "La sezione Griglia è stata riscritta da zero (nuovi tagli: Picanha, Tagliata R&G, Tagliata del Poggio, Rostinciane) — nessun abbinamento è ereditato dal vecchio menù, verificare in sala che il personale abbia disimparato i vecchi pairing su Costata/Grigliata Mista/Salsiccia, non più in carta.",
+  "Su richiesta, gli abbinamenti di Primi e Insalatone (menù Pranzo - Light Lunch) sono stati esclusi da questa scheda."
 ];
 
 var CATS = [
-  {k:"antipasti", label:"🍽️ Condividere / Antipasti", copy:"Antipasti, taglieri e condivisioni."},
-  {k:"insalate",  label:"🥗 Insalatone",               copy:"Insalate fresche e leggere."},
-  {k:"primi",     label:"🍝 Primi",                    copy:"Pasta, gnocchi e gnudi."},
-  {k:"griglia",   label:"🔥 Griglia",                  copy:"Carni e secondi dalla griglia."},
-  {k:"pinse",     label:"🍕 Pinse",                    copy:"Pinse romane e schiacciate."},
-  {k:"burger",    label:"🍔 Hamburger",                copy:"Burger di carne, pesce e vegetariani."},
-  {k:"dolci",     label:"🍮 Dolci",                    copy:"Dessert e proposte di fine pasto."}
+  {k:"antipasti", label:"Condividi",  copy:"Antipasti, taglieri e condivisioni."},
+  {k:"griglia",   label:"Griglia",    copy:"Carni e secondi dalla griglia."},
+  {k:"pinse",     label:"Pinse",      copy:"Pinse romane e schiacciate."},
+  {k:"burger",    label:"Hamburger",  copy:"Burger di carne, pesce e vegetariani."},
+  {k:"dolci",     label:"Dolci",      copy:"Dessert e proposte di fine pasto."}
 ];
 
 var curF = "all", curS = "";
-var collapsedSections = {antipasti:true,insalate:true,primi:true,griglia:true,pinse:true,burger:true,dolci:true};
+var collapsedSections = {antipasti:true,griglia:true,pinse:true,burger:true,dolci:true};
 
 function e(s){
   return String(s||"")
@@ -1072,47 +1005,150 @@ function e(s){
     .replace(/"/g,"&quot;");
 }
 
+/* ── Iconografia (SVG inline, niente emoji) ── */
+var PICK_ICONS = {
+  wine: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7.2 3h9.6l-1.1 8.3a3.7 3.7 0 0 1-3.7 3.2 3.7 3.7 0 0 1-3.7-3.2L7.2 3z"/><path d="M12 14.5V21M8.3 21h7.4"/></svg>',
+  gin: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3h8l-1 16.2a1 1 0 0 1-1 .8h-4a1 1 0 0 1-1-.8L8 3z"/><circle cx="10.8" cy="9" r=".55" fill="currentColor" stroke="none"/><circle cx="13.4" cy="12.6" r=".55" fill="currentColor" stroke="none"/><circle cx="11.2" cy="15.8" r=".55" fill="currentColor" stroke="none"/></svg>',
+  cocktail: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h14l-6.2 7.2v6.8"/><path d="M9 19h6"/><circle cx="16" cy="5.6" r="1" fill="currentColor" stroke="none"/></svg>',
+  beer: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="7" width="11" height="13" rx="1.5"/><path d="M16 10h2a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-2"/><path d="M5 10.3h11"/></svg>'
+};
+var BADGE_ICONS = {
+  star: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.1-5.4 3.1 1.3-6-4.6-4.1 6.1-.6z"/></svg>',
+  check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.3l2.6 2.6L16 9.3"/></svg>'
+};
+var CAT_ICONS = {
+  antipasti: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg>',
+  griglia: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18M3 14h18"/></svg>',
+  pinse: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 3l8 17H4z"/><circle cx="12" cy="11" r="1" fill="currentColor" stroke="none"/><circle cx="10" cy="15" r="1" fill="currentColor" stroke="none"/><circle cx="14" cy="15" r="1" fill="currentColor" stroke="none"/></svg>',
+  burger: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 8h16M4 12h16M4 16h16"/></svg>',
+  dolci: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="7" y="7" width="10" height="10" rx="2" transform="rotate(45 12 12)"/></svg>'
+};
+var CAT_COLOR_VAR = { antipasti:"vine", griglia:"copper", pinse:"oxide", burger:"straw", dolci:"mist" };
+var PICK_COLOR_VAR = { wine:"oxide", gin:"mist", cocktail:"copper", beer:"straw" };
+
+/* ── Parser dei testi di abbinamento (icona → categoria, nome, produttore, prezzo, motivo, alternativa) ── */
+function parseSegment(seg){
+  var starred = seg.indexOf('⭐') !== -1;
+  var official = seg.indexOf('✅') !== -1;
+  seg = seg.replace(/⭐/g,'').replace(/✅/g,'').replace(/\s+/g,' ').trim();
+
+  var parenMatches = [], re = /\(([^()]*€[^()]*)\)/g, m;
+  while((m = re.exec(seg))) parenMatches.push(m);
+
+  var price = null, namePart = seg, rationale = '';
+  if(parenMatches.length){
+    var last = parenMatches[parenMatches.length - 1];
+    price = last[1];
+    var beforeParen = seg.slice(0, last.index).trim();
+    var afterParen = seg.slice(last.index + last[0].length).trim();
+    namePart = beforeParen;
+    afterParen = afterParen.replace(/^[—–-]\s*/, '');
+    rationale = afterParen;
+  }
+
+  var name = namePart, producer = null;
+  var dashIdx = namePart.indexOf(' – ');
+  if(dashIdx !== -1){
+    name = namePart.slice(0, dashIdx).trim();
+    producer = namePart.slice(dashIdx + 3).trim();
+  }
+  name = name.replace(/"([^"]*)"/g, '\u201C$1\u201D');
+
+  return {name:name, producer:producer, price:price, rationale:rationale, starred:starred, official:official};
+}
+
+function parsePick(raw){
+  var s = String(raw || '').trim();
+  var chars = Array.from(s);
+  var icon = chars[0];
+  var rest = chars.slice(1).join('').trim();
+  var ICONMAP = {'🥇':'wine','🔄':'wine','🍷':'wine','🍸':'gin','🍹':'cocktail','🍺':'beer'};
+  var cat = ICONMAP[icon] || 'other';
+
+  var labelMatch = rest.match(/^(G&T|Cocktail|Birra):\s*/);
+  if(labelMatch) rest = rest.slice(labelMatch[0].length);
+
+  var altRaw = null, mainRaw = rest;
+  var altIdx = rest.indexOf('; Alt:');
+  if(altIdx !== -1){
+    mainRaw = rest.slice(0, altIdx).trim();
+    altRaw = rest.slice(altIdx + 6).trim();
+  }
+
+  return {cat:cat, main:parseSegment(mainRaw), alt: altRaw ? parseSegment(altRaw) : null};
+}
+
+function renderPick(raw){
+  var p = parsePick(raw);
+  var colorVar = 'var(--' + (PICK_COLOR_VAR[p.cat] || 'ink-muted') + ')';
+  var icon = PICK_ICONS[p.cat] || '';
+  var badges = '';
+  if(p.main.official) badges += '<span class="pick-badge is-official">'+BADGE_ICONS.check+'Ufficiale</span>';
+  else if(p.main.starred) badges += '<span class="pick-badge">'+BADGE_ICONS.star+'Consigliato</span>';
+
+  var altHtml = '';
+  if(p.alt){
+    altHtml = '<div class="pick-alt">'+
+      '<span class="alt-tag">In alternativa</span>'+
+      '<span class="alt-name">'+e(p.alt.name)+'</span>'+
+      (p.alt.price ? '<span class="alt-price">'+e(p.alt.price)+'</span>' : '')+
+      (p.alt.rationale ? '<span class="alt-note">— '+e(p.alt.rationale)+'</span>' : '')+
+    '</div>';
+  }
+
+  return '<li class="pick" style="--pick-color:'+colorVar+'">'+
+    '<div class="pick-icon">'+icon+'</div>'+
+    '<div class="pick-body">'+
+      '<div class="pick-head">'+
+        '<span class="pick-name">'+e(p.main.name)+'</span>'+
+        (p.main.producer ? '<span class="pick-producer">'+e(p.main.producer)+'</span>' : '')+
+        badges+
+        (p.main.price ? '<span class="pick-price">'+e(p.main.price)+'</span>' : '')+
+      '</div>'+
+      (p.main.rationale ? '<div class="pick-note">'+e(p.main.rationale)+'</div>' : '')+
+      altHtml+
+    '</div>'+
+  '</li>';
+}
+
+function renderPickList(arr){
+  if(!arr || !arr.length) return '';
+  return '<ul class="pick-list">' + arr.map(renderPick).join('') + '</ul>';
+}
+
+function previewChips(a){
+  var seen = {}, starred = false, official = false;
+  var all = (a.vini||[]).concat(a.bev||[]);
+  for(var i=0;i<all.length;i++){
+    var p = parsePick(all[i]);
+    seen[p.cat] = true;
+    if(p.main.starred) starred = true;
+    if(p.main.official) official = true;
+  }
+  var order = ['wine','gin','cocktail','beer'];
+  var labels = {wine:'Vino', gin:'Gin Tonic', cocktail:'Cocktail', beer:'Birra'};
+  var html = '';
+  for(var j=0;j<order.length;j++){
+    var c = order[j];
+    if(seen[c]) html += '<span class="preview-chip" style="--chip-color:var(--'+PICK_COLOR_VAR[c]+')">'+(PICK_ICONS[c]||'')+labels[c]+'</span>';
+  }
+  if(official) html += '<span class="preview-flag is-official">'+BADGE_ICONS.check+'Ufficiale</span>';
+  else if(starred) html += '<span class="preview-flag">'+BADGE_ICONS.star+'Consigliato</span>';
+  return html;
+}
+
 function buildStats(){
-  var counts = {antipasti:0,insalate:0,primi:0,griglia:0,pinse:0,burger:0,dolci:0};
+  var counts = {antipasti:0,griglia:0,pinse:0,burger:0,dolci:0};
   for(var i=0;i<A.length;i++) if(counts[A[i].cat]!==undefined) counts[A[i].cat]++;
-  var colors = {
-    antipasti:"var(--color-accent)",
-    insalate:"var(--color-gold)",
-    primi:"var(--color-red)",
-    griglia:"var(--color-amber)",
-    pinse:"var(--color-rose)",
-    burger:"var(--color-violet)",
-    dolci:"var(--color-blue)"
-  };
-  var labels = {antipasti:"Antipasti",insalate:"Insalate",primi:"Primi",griglia:"Griglia",pinse:"Pinse",burger:"Burger",dolci:"Dolci"};
   var html = "";
   for(var k in counts){
-    html += '<div class="stat"><span class="dot" style="background:'+colors[k]+'"></span>'+labels[k]+': '+counts[k]+'</div>';
+    html += '<div class="stat"><span class="dot" style="background:var(--'+CAT_COLOR_VAR[k]+')"></span>'+CATS.find(function(c){return c.k===k;}).label+': '+counts[k]+'</div>';
   }
   document.getElementById("statsBar").innerHTML = html;
 }
 
-function formatPickText(text){
-  var raw = String(text || "");
-  var safe = e(raw);
-  var parts = safe.split(" — ");
-  var first = parts[0];
-  var rest = parts.length > 1 ? " — " + parts.slice(1).join(" — ") : "";
-  return '<span class="pick-name">' + first + '</span>' + rest;
-}
-
-function arrHtml(arr){
-  if(!arr || !arr.length) return "";
-  var h = "<ul>";
-  for(var i=0;i<arr.length;i++){
-    h += "<li>" + formatPickText(arr[i]) + "</li>";
-  }
-  h += "</ul>";
-  return h;
-}
-
 function card(a){
-  return '<article class="card" id="c'+a.id+'">'+
+  return '<article class="card" id="c'+a.id+'" style="--cat-color:var(--'+CAT_COLOR_VAR[a.cat]+')">'+
     '<div class="card-top" onclick="tc('+a.id+')">'+
       '<div class="card-title">'+
         '<h4>'+e(a.nome)+'</h4>'+
@@ -1123,15 +1159,13 @@ function card(a){
         '<div class="chevron" id="ch'+a.id+'">▾</div>'+
       '</div>'+
     '</div>'+
-    '<div class="badges">'+
-      '<span class="badge badge-vini">Vini</span>'+
-      '<span class="badge badge-bev">Cocktail / G&T</span>'+
-      '<span class="badge badge-birra">Birra / Digestivo</span>'+
-    '</div>'+
+    '<div class="preview">'+previewChips(a)+'</div>'+
     '<div class="detail" id="d'+a.id+'">'+
+      '<div class="detail-inner">'+
       '<div class="detail-grid">'+
-        '<div class="detail-block"><div class="detail-label">Vini consigliati</div><div class="detail-value">'+arrHtml(a.vini)+'</div></div>'+
-        '<div class="detail-block"><div class="detail-label">Cocktail / Gin Tonic / Birra</div><div class="detail-value">'+arrHtml(a.bev)+'</div></div>'+
+        '<div class="detail-block"><div class="detail-label">'+PICK_ICONS.wine+'Vini consigliati</div>'+renderPickList(a.vini)+'</div>'+
+        '<div class="detail-block"><div class="detail-label">'+PICK_ICONS.cocktail+'Gin Tonic · Cocktail · Birra</div>'+renderPickList(a.bev)+'</div>'+
+      '</div>'+
       '</div>'+
     '</div>'+
   '</article>';
@@ -1139,17 +1173,8 @@ function card(a){
 
 function tc(id){
   var c = document.getElementById('c'+id);
-  var d = document.getElementById('d'+id);
-  var ch = document.getElementById('ch'+id);
-  if(!c || !d) return;
-  var open = c.classList.contains('open');
-  if(open){
-    c.classList.remove('open');
-    if(ch) ch.textContent = '▾';
-  } else {
-    c.classList.add('open');
-    if(ch) ch.textContent = '▴';
-  }
+  if(!c) return;
+  c.classList.toggle('open');
 }
 
 function toggleSection(catKey){
@@ -1172,12 +1197,19 @@ function renderNotes(){
   for(var i=0;i<NOTES.length;i++){
     if(!q || NOTES[i].toLowerCase().indexOf(q)>-1) list.push(NOTES[i]);
   }
-  if(!list.length) return '<div class="empty">Nessuna nota trovata per "'+e(curS)+'"</div>';
-  var h = '<section><div class="section-head" style="cursor:default;"><div><h3>💡 Note operative finali</h3><p>Suggerimenti e priorità per la sala.</p></div></div>';
+  if(!list.length) return emptyState('Nessuna nota trovata per \u201C'+e(curS)+'\u201D');
+  var h = '<section><div class="section-head" style="cursor:default;"><div><h3>Note di sala</h3><p>Promemoria e priorità per il servizio.</p></div></div>';
   h += '<div class="notes-section"><ul>';
-  for(var j=0;j<list.length;j++) h += '<li>'+e(list[j])+'</li>';
+  for(var j=0;j<list.length;j++){
+    var idx = (j+1 < 10 ? '0' : '') + (j+1);
+    h += '<li><span class="note-index">'+idx+'</span><span>'+e(list[j])+'</span></li>';
+  }
   h += '</ul></div></section>';
   return h;
+}
+
+function emptyState(msg){
+  return '<div class="empty">'+PICK_ICONS.wine+'<div>'+msg+'</div></div>';
 }
 
 function render(){
@@ -1205,7 +1237,7 @@ function render(){
 
     out += '<section>'+
       '<div class="section-head" onclick="toggleSection(\''+cat.k+'\')" id="sh-'+cat.k+'">'+
-        '<div><h3>'+cat.label+'</h3><p>'+e(cat.copy)+'</p></div>'+
+        '<div><h3 style="display:flex;align-items:center;gap:9px;"><span style="width:19px;height:19px;color:var(--'+CAT_COLOR_VAR[cat.k]+')">'+CAT_ICONS[cat.k]+'</span>'+cat.label+'</h3><p>'+e(cat.copy)+'</p></div>'+
         '<span class="section-chevron" id="sca-'+cat.k+'">▸</span>'+
       '</div>'+
       '<div class="grid collapsed" id="sec-'+cat.k+'">'+
@@ -1217,7 +1249,7 @@ function render(){
   if(curF === "all") out += renderNotes();
 
   if(!tot && curF !== "all"){
-    out = '<div class="empty">Nessun abbinamento trovato per "'+e(curS)+'"</div>';
+    out = emptyState('Nessun abbinamento trovato per \u201C'+e(curS)+'\u201D');
   }
 
   document.getElementById("main").innerHTML = out;
@@ -1239,37 +1271,15 @@ document.getElementById("searchInput").addEventListener("input", function(ev){
 
 const root = document.documentElement;
 const toggle = document.getElementById("themeToggle");
-const icon = document.getElementById("themeIcon");
-
-function syncThemeIcon(){
-  icon.textContent = root.getAttribute("data-theme") === "dark" ? "☀️" : "🌙";
-}
 
 toggle.addEventListener("click", function(){
   const next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
   root.setAttribute("data-theme", next);
+  try{ localStorage.setItem("poggio-theme", next); }catch(e){}
 });
+
 buildStats();
 render();
-</script>
-<script>
-(function(){
-  var root=document.documentElement;
-  var saved=localStorage.getItem('poggio-theme');
-  if(saved) root.setAttribute('data-theme',saved);
-  document.addEventListener('DOMContentLoaded',function(){
-    var toggle=document.getElementById('themeToggle');
-    var icon=document.getElementById('themeIcon');
-    function sync(){icon.textContent=root.getAttribute('data-theme')==='dark'?'☀️':'🌙'}
-    sync();
-    toggle.addEventListener('click',function(){
-      var next=root.getAttribute('data-theme')==='dark'?'light':'dark';
-      root.setAttribute('data-theme',next);
-      localStorage.setItem('poggio-theme',next);
-      sync();
-    });
-  });
-})();
 </script>
 </body>
 </html>
