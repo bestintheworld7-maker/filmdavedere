@@ -1845,6 +1845,7 @@ function restoreGiacenze(){ /* no-op: stato caricato da localStorage */ }
 function restoreOrderUnits(){ /* no-op: stato caricato da localStorage */ }
 function sid(name){ return name.replace(/[^a-z0-9]/gi,'_'); }
 function escQ(s){ return s.replace(/\\/g,'\\\\').replace(/'/g,"\\'"); }
+function escAttr(s){ return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
 
 /* ── BUILD UI ── */
 function buildUI(){
@@ -1910,10 +1911,10 @@ function buildUI(){
           <div class="qty-wrap">
             ${unitToggleHtml}
             <div class="qty-ctrl">
-              <button class="qty-btn" data-action="giac" data-name="${escQ(p.name)}" data-delta="-1">−</button>
+              <button class="qty-btn" data-action="giac" data-name="${escAttr(p.name)}" data-delta="-1">−</button>
               <input class="qty-val" type="number" min="0" value="0" id="giac_${s}"
                 onchange="setGiacInput('${escQ(p.name)}',this.value)" onfocus="this.select()"/>
-              <button class="qty-btn" data-action="giac" data-name="${escQ(p.name)}" data-delta="1">+</button>
+              <button class="qty-btn" data-action="giac" data-name="${escAttr(p.name)}" data-delta="1">+</button>
             </div>
           </div>
         </div>
@@ -1923,10 +1924,10 @@ function buildUI(){
           <div class="qty-wrap">
             ${unitToggleOrdHtml}
             <div class="qty-ctrl">
-              <button class="qty-btn" data-action="qty" data-name="${escQ(p.name)}" data-delta="-1">−</button>
+              <button class="qty-btn" data-action="qty" data-name="${escAttr(p.name)}" data-delta="-1">−</button>
               <input class="qty-val" type="number" min="0" value="0" id="qty_${s}"
                 onchange="setQtyInput('${escQ(p.name)}',this.value)" onfocus="this.select()"/>
-              <button class="qty-btn" data-action="qty" data-name="${escQ(p.name)}" data-delta="1">+</button>
+              <button class="qty-btn" data-action="qty" data-name="${escAttr(p.name)}" data-delta="1">+</button>
             </div>
           </div>
         </div>
